@@ -4,8 +4,7 @@ import { HomeComponent } from './component/home.component';
 import {HomeRoutingModule} from "./home-routing.module";
 import {LayoutModule} from "../layout/layout.module";
 import {NgxMasonryModule} from "ngx-masonry";
-import {AnimationBuilder} from "@angular/animations";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 
 @NgModule({
   declarations: [HomeComponent],
@@ -14,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeRoutingModule,
     LayoutModule,
     NgxMasonryModule,
+    BsDropdownModule.forRoot(),
   ]
 })
 /**

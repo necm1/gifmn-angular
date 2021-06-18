@@ -15,82 +15,82 @@ import {NgxMasonryOptions} from "ngx-masonry";
 export class HomeComponent implements OnInit {
   public image: ImageItem[] = [
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/wh1xrNQ_d.webp?maxwidth=520&shape=thumb&fidelity=high',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/EzEgHEN.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/0Qejalj.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/VYlDDFu.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/9C91CTr.jpeg',
       created_at: '1337'
     },
     {
-      image_title: 'Atatürk',
+      title: 'Atatürk',
       path: 'https://i.imgur.com/obxXAco.jpeg',
       created_at: '1337'
     }

@@ -1,5 +1,5 @@
-<img [src]="imageItem.path" class="card-img-top" alt="...">
-<div class="card-body">
-  <h5 class="card-title">{{ imageItem.image_title }}</h5>
-  <a href="#" class="btn btn-primary">Go somewhere</a>
+<img [src]="imageItem.path" class="card-img-top" [alt]="imageItem.title" [title]="imageItem.title" />
+
+<div class="p-3 image-meta">
+  <h5 class="image-title">{{ imageItem.title }}</h5>
 </div>

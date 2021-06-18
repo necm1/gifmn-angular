@@ -17,6 +17,12 @@ export class ImageCardComponent implements OnInit {
    */
   public imageItem: ImageItem;
 
+  /**
+   * ImageCard Component Constructor
+   *
+   * @constructor
+   * @param ref
+   */
   constructor(private ref: ElementRef) { }
 
   /**

@@ -1,8 +1,29 @@
 <div class="container">
+  <div class="d-flex flex-row mb-3">
+    <div class="d-inline-flex flex-grow-1">
+      <div class="btn-group" dropdown>
+        <span dropdownToggle type="button" class="dropdown-toggle"
+              aria-controls="dropdown-basic">
+          KATEGORIE <span class="caret"></span>
+        </span>
+
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+            role="menu" aria-labelledby="button-basic">
+          <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+          <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+          <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+          <li class="divider dropdown-divider"></li>
+          <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <ngx-masonry class="row" [options]="masonryOptions" [ordered]="true">
     <div ngxMasonryItem class="masonry-item col-sm-4 col-lg-2 mb-4" *ngFor="let img of image">
-      <app-image-card [image]="img"></app-image-card>
+      <a href="#">
+        <app-image-card [image]="img"></app-image-card>
+      </a>
     </div>
   </ngx-masonry>
-
 </div>

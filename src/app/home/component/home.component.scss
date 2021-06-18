@@ -1,0 +1,10 @@
+:host {
+  display: flex;;
+  margin-top: -4.5rem;
+
+  .masonry-item {
+    & > a {
+      text-decoration: none;
+    }
+  }
+}
