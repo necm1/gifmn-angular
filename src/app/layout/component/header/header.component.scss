@@ -1,0 +1,7 @@
+@use '~src/styles/variables' as var;
+
+:host {
+  background: var.$header-background;
+  height: var.$header-height;
+  width: 100%;
+}

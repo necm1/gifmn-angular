@@ -1,0 +1,7 @@
+.form-control {
+  opacity: .8;
+
+  &:focus {
+    opacity: 1;
+  }
+}

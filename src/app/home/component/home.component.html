@@ -1,0 +1,8 @@
+<div class="container">
+  <ngx-masonry class="row" [options]="masonryOptions" [ordered]="true">
+    <div ngxMasonryItem class="masonry-item col-sm-4 col-lg-2 mb-4" *ngFor="let img of image">
+      <app-image-card [image]="img"></app-image-card>
+    </div>
+  </ngx-masonry>
+
+</div>
