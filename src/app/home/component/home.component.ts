@@ -12,7 +12,7 @@ import {NgxMasonryComponent, NgxMasonryOptions} from "ngx-masonry";
  * @class HomeComponent
  * @implements OnInit
  */
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   /**
    * @public
    * @property
@@ -174,6 +174,23 @@ export class HomeComponent implements OnInit {
   }
 
   /**
+   * Handle After View Initialization
+   *
+   * @public
+   */
+  public ngAfterViewInit(): void {
+    const subscription = this.masonry?.itemsLoaded.asObservable().subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.masonry?.reloadItems();
+          this.masonry?.layout();
+        }, 150);
+      },
+      complete: () => subscription.unsubscribe()
+    })
+  }
+
+  /**
    * Select Category
    *
    * @todo add backend support
@@ -183,17 +200,4 @@ export class HomeComponent implements OnInit {
   public selectCategory(item: any): void {
     this.activeDropdownItem = item;
   }
-
-  /**
-   * Update Masonry Layout
-   *
-   * @public
-   */
-  public updateLayout(): void {
-    if (this.masonry !== undefined) {
-      this.masonry.reloadItems();
-      this.masonry.layout();
-    }
-  }
-
 }
