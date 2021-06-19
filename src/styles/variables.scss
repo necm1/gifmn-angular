@@ -17,6 +17,17 @@ $input-box-shadow: unset;
 $input-focus-box-shadow: unset;
 $input-focus-border-color: transparent;
 
+// Dropdown
+$dropdown-bg: #53565d;
+$dropdown-box-shadow: 0 9px 25px 0 rgb(0 0 0 / 78%);
+$dropdown-color: #b4b9c2;
+$dropdown-border-radius: 6px;
+$dropdown-link-color: #b4b9c2;
+$dropdown-link-active-color: #fff;
+$dropdown-link-active-bg: #53565d;
+$dropdown-link-hover-color: #b4b9c2;
+$dropdown-link-hover-bg: hsla(0,0%,80%,.29);
+
 // Card
 $card-bg: #2e3035;
 $card-border-color: transparent;

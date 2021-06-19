@@ -34,4 +34,17 @@ export class ImageCardComponent implements OnInit {
     this.ref.nativeElement.classList.add('card');
   }
 
+  /**
+   * Handle Video Load
+   *
+   * @public
+   * @param event
+   */
+  public handleVideoLoad(event: any): void {
+    const target = <HTMLVideoElement>event.target;
+    const height = target.videoHeight;
+
+    // Set half of the height ;)
+    target.style.height = `${(height / 2).toLocaleString()}px`;
+  }
 }

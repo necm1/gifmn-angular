@@ -1,4 +1,12 @@
-<img [src]="imageItem.path" class="card-img-top" [alt]="imageItem.title" [title]="imageItem.title" />
+<ng-container *ngIf="imageItem.type === 'video'; else image">
+  <video (loadedmetadata)="handleVideoLoad($event)" playsinline="" autoplay="true" loop="" class="video">
+    <source type="video/mp4" [src]="imageItem.path">
+  </video>
+</ng-container>
+
+<ng-template #image>
+  <img [src]="imageItem.path" class="card-img-top" [alt]="imageItem.title" [title]="imageItem.title" />
+</ng-template>
 
 <div class="p-3 image-meta">
   <h5 class="image-title">{{ imageItem.title }}</h5>

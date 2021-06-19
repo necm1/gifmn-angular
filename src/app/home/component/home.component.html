@@ -2,25 +2,27 @@
   <div class="d-flex flex-row mb-3">
     <div class="d-inline-flex flex-grow-1">
       <div class="btn-group" dropdown>
-        <span dropdownToggle type="button" class="dropdown-toggle"
+        <span dropdownToggle type="button" class="dropdown-toggle text-uppercase fw-bold"
               aria-controls="dropdown-basic">
-          KATEGORIE <span class="caret"></span>
+          {{ activeDropdownItem.title }} <span class="caret"></span>
         </span>
 
         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
             role="menu" aria-labelledby="button-basic">
-          <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
-          <li class="divider dropdown-divider"></li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+          <li role="menuitem" *ngFor="let item of dropdownItems">
+            <a class="dropdown-item text-uppercase"
+               [class.active]="activeDropdownItem.id === item.id"
+               [class.fw-bold]="activeDropdownItem.id === item.id"
+               href="#"
+               (click)="selectCategory(item)">{{ item.title }}</a>
           </li>
         </ul>
       </div>
     </div>
   </div>
-  <ngx-masonry class="row" [options]="masonryOptions" [ordered]="true">
-    <div ngxMasonryItem class="masonry-item col-sm-4 col-lg-2 mb-4" *ngFor="let img of image">
+
+  <ngx-masonry class="row" [options]="masonryOptions" [ordered]="true" [updateLayout]="updateLayout()">
+    <div ngxMasonryItem class="masonry-item col-xxl-2 col-lg-3 col-md-4 col-sm-12 mb-4" *ngFor="let img of image">
       <a href="#">
         <app-image-card [image]="img"></app-image-card>
       </a>
