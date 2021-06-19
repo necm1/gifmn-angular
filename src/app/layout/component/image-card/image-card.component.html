@@ -1,5 +1,5 @@
 <ng-container *ngIf="imageItem.type === 'video'; else image">
-  <video (loadedmetadata)="handleVideoLoad($event)" playsinline="" autoplay="true" loop="" class="video">
+  <video (loadedmetadata)="handleVideoLoad($event)" playsinline="true" autoplay="true" class="video">
     <source type="video/mp4" [src]="imageItem.path">
   </video>
 </ng-container>

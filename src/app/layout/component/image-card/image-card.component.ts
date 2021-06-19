@@ -10,6 +10,7 @@ import {ImageItem} from "../../../_model/image-item.interface";
  * @class ImageCardComponent
  */
 export class ImageCardComponent implements OnInit {
+
   @Input('image')
   /**
    * @public
@@ -46,5 +47,10 @@ export class ImageCardComponent implements OnInit {
 
     // Set half of the height ;)
     target.style.height = `${(height / 2).toLocaleString()}px`;
+
+    if (target.paused) {
+      target.muted = true;
+      target.play();
+    }
   }
 }
