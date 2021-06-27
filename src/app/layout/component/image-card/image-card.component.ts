@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
-import {ImageItem} from "../../../_model/image-item.interface";
+import {Post} from '../../../_model/post.entity';
 
 @Component({
   selector: 'app-image-card',
@@ -10,13 +10,12 @@ import {ImageItem} from "../../../_model/image-item.interface";
  * @class ImageCardComponent
  */
 export class ImageCardComponent implements OnInit {
-
   @Input('image')
   /**
    * @public
    * @property
    */
-  public imageItem: ImageItem;
+  public imageItem: Post;
 
   /**
    * ImageCard Component Constructor

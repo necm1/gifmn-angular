@@ -10,10 +10,9 @@
         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
             role="menu" aria-labelledby="button-basic">
           <li role="menuitem" *ngFor="let item of dropdownItems">
-            <a class="dropdown-item text-uppercase"
+            <a class="dropdown-item text-uppercase c-pointer"
                [class.active]="activeDropdownItem.id === item.id"
                [class.fw-bold]="activeDropdownItem.id === item.id"
-               href="#"
                (click)="selectCategory(item)">{{ item.title }}</a>
           </li>
         </ul>

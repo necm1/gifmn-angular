@@ -1,11 +1,11 @@
 @import "./buttons";
 @import "./inputs";
-@import "./cards.scss";
+@import "./cards";
+@import "./utitlies";
 @import "./variables";
 
 @import "~bootstrap/scss/bootstrap";
 @import "~open-iconic/font/css/open-iconic-bootstrap.min.css";
-
 
 html {
   &, body {

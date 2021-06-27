@@ -1,7 +1,10 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {TitleService} from "../../_service/title.service";
-import {ImageItem} from "../../_model/image-item.interface";
-import {NgxMasonryComponent, NgxMasonryOptions} from "ngx-masonry";
+import {TitleService} from '../../_service/title.service';
+import {ImageItem} from '../../_model/image-item.interface';
+import {NgxMasonryComponent, NgxMasonryOptions} from 'ngx-masonry';
+import {APIService} from '../../_service/api.service';
+import {APIResponseList} from '../../_model/api-response-list.model';
+import {Post} from '../../_model/post.entity';
 
 @Component({
   selector: 'app-home',
@@ -19,110 +22,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
 
-  public image: ImageItem[] = [
-    {
-      title: 'Video Test',
-      path: 'https://i.imgur.com/yXvahyu_lq.mp4',
-      created_at: '1337',
-      type: 'video'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/wh1xrNQ_d.webp?maxwidth=520&shape=thumb&fidelity=high',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/EzEgHEN.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/0Qejalj.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/VYlDDFu.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/9C91CTr.jpeg',
-      created_at: '1337',
-      type: 'image'
-    },
-    {
-      title: 'Atatürk',
-      path: 'https://i.imgur.com/obxXAco.jpeg',
-      created_at: '1337',
-      type: 'image'
-    }
-  ];
+  public image: Post[] = [];
 
   /**
    * @public
@@ -145,26 +45,36 @@ export class HomeComponent implements OnInit, AfterViewInit {
       id: 2,
       title: 'keine ahnung'
     }
-  ]
+  ];
 
   public masonryOptions: NgxMasonryOptions = {
     percentPosition: true,
     itemSelector: '.masonry-item',
-  }
+  };
 
   /**
    * HomeComponent Constructor
    *
    * @constructor
    * @param title
+   * @param apiService
    */
-  constructor(private title: TitleService) {
+  constructor(
+    private title: TitleService,
+    private apiService: APIService
+  ) {
   }
 
   /**
    * @public
    */
   public ngOnInit(): void {
+    const subscription = this.apiService.get('posts?page=1&limit=35').subscribe({
+      next: (value: APIResponseList<Post>) => this.image = value.items,
+      error: () => subscription.unsubscribe(),
+      complete: () => subscription.unsubscribe()
+    });
+
     this.title.set('Startseite');
 
     if (!this.activeDropdownItem) {
@@ -187,7 +97,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }, 150);
       },
       complete: () => subscription.unsubscribe()
-    })
+    });
   }
 
   /**
