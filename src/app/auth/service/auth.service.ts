@@ -11,6 +11,10 @@ export class AuthService {
    */
   private $currentUser: BehaviorSubject<any>;
 
+  /**
+   * @private
+   * @property
+   */
   private $currentToken: BehaviorSubject<string>;
 
   constructor() {

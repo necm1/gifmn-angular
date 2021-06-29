@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {TitleService} from '../../_service/title.service';
-import {ImageItem} from '../../_model/image-item.interface';
 import {NgxMasonryComponent, NgxMasonryOptions} from 'ngx-masonry';
 import {APIService} from '../../_service/api.service';
-import {APIResponseList} from '../../_model/api-response-list.model';
-import {Post} from '../../_model/post.entity';
+import {APIResponseList} from '../../_model/api/api-response-list.model';
+import {Post} from '../../_model/post/post.entity';
+import {PostCategory} from '../../_model/post/post-category.entity';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,30 +23,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
 
+  /**
+   * @public
+   * @property
+   */
   public image: Post[] = [];
 
   /**
    * @public
    * @property
-   * @todo add interface
    */
-  public activeDropdownItem: any;
+  public categories: PostCategory[] = [];
 
   /**
    * @public
    * @property
-   * @todo remove fake data & add interface[]
    */
-  public dropdownItems: any[] = [
-    {
-      id: 1,
-      title: 'most viral'
-    },
-    {
-      id: 2,
-      title: 'keine ahnung'
-    }
-  ];
+  public activeDropdownItem: PostCategory;
 
   public masonryOptions: NgxMasonryOptions = {
     percentPosition: true,
@@ -58,10 +52,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @constructor
    * @param title
    * @param apiService
+   * @param route
    */
   constructor(
     private title: TitleService,
-    private apiService: APIService
+    private apiService: APIService,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -75,11 +71,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
       complete: () => subscription.unsubscribe()
     });
 
+    this.categories = this.route.snapshot.data['categories'] ?? [];
+
     this.title.set('Startseite');
 
-    if (!this.activeDropdownItem) {
+    if (!this.activeDropdownItem && this.categories.length > 0) {
       // Set first item
-      this.activeDropdownItem = this.dropdownItems[0];
+      this.activeDropdownItem = this.categories[0];
     }
   }
 
@@ -103,11 +101,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   /**
    * Select Category
    *
-   * @todo add backend support
    * @public
-   * @param id
+   * @todo after selection to new request with category
+   * and replace the current items with the new one
    */
-  public selectCategory(item: any): void {
+  public selectCategory(item: PostCategory): void {
     this.activeDropdownItem = item;
   }
 }

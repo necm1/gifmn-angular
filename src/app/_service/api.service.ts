@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environment';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {APIResponse} from '../_model/api-response.model';
-import {APIResponseList} from '../_model/api-response-list.model';
+import {APIResponse} from '../_model/api/api-response.model';
+import {APIResponseList} from '../_model/api/api-response-list.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,13 +29,22 @@ export class APIService {
    * @public
    * @param url
    * @param options
+   * @param list
    * @returns Observable<APIResponse<T> | APIResponseList<T>>
    */
   public get<T>(
     url: string,
-    options = {}
-  ): Observable<APIResponse<T> | APIResponseList<T>> {
-    return this.http.get<APIResponse<T> | APIResponseList<T>>(
+    options = {},
+    list = false,
+  ): Observable<APIResponse<T>> | Observable<APIResponseList<T>> {
+    if (list) {
+      return this.http.get<APIResponseList<T>>(
+        this.buildURL(url),
+          options
+      );
+    }
+
+    return this.http.get<APIResponse<T>>(
       this.buildURL(url),
       options
     );

@@ -4,16 +4,16 @@
       <div class="btn-group" dropdown>
         <span dropdownToggle type="button" class="dropdown-toggle text-uppercase fw-bold"
               aria-controls="dropdown-basic">
-          {{ activeDropdownItem.title }} <span class="caret"></span>
+          {{ activeDropdownItem.name }} <span class="caret"></span>
         </span>
 
         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
             role="menu" aria-labelledby="button-basic">
-          <li role="menuitem" *ngFor="let item of dropdownItems">
+          <li role="menuitem" *ngFor="let item of categories">
             <a class="dropdown-item text-uppercase c-pointer"
                [class.active]="activeDropdownItem.id === item.id"
                [class.fw-bold]="activeDropdownItem.id === item.id"
-               (click)="selectCategory(item)">{{ item.title }}</a>
+               (click)="selectCategory(item)">{{ item.name }}</a>
           </li>
         </ul>
       </div>

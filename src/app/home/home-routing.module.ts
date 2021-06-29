@@ -1,11 +1,17 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {HomeComponent} from "./component/home.component";
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {HomeComponent} from './component/home.component';
+import {CategoryResolver} from './resolver/category.resolver';
+import {ItemsResolver} from './resolver/items.resolver';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    resolve: {
+      categories: CategoryResolver,
+      items: ItemsResolver
+    }
   }
 ];
 
@@ -16,4 +22,5 @@ const routes: Routes = [
 /**
  * @class HomeRoutingModule
  */
-export class HomeRoutingModule { }
+export class HomeRoutingModule {
+}

@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
-import {Post} from '../../../_model/post.entity';
+import {Post} from '../../../_model/post/post.entity';
 
 @Component({
   selector: 'app-image-card',
@@ -45,7 +45,7 @@ export class ImageCardComponent implements OnInit {
     const height = target.videoHeight;
 
     // Set half of the height ;)
-    target.style.height = `${(height / 2).toLocaleString()}px`;
+    //target.style.height = `${(height / 5).toLocaleString()}px`;
 
     if (target.paused) {
       target.muted = true;
