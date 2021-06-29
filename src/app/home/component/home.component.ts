@@ -6,6 +6,7 @@ import {APIResponseList} from '../../_model/api/api-response-list.model';
 import {Post} from '../../_model/post/post.entity';
 import {PostCategory} from '../../_model/post/post-category.entity';
 import {ActivatedRoute} from '@angular/router';
+import {CategoryService} from '../../_service/category.service';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @public
    * @property
    */
-  public image: Post[] = [];
+  public itemsList: APIResponseList<Post>;
+
+  /**
+   * @public
+   * @property
+   */
+  public items: Post[] = [];
 
   /**
    * @public
@@ -53,11 +60,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @param title
    * @param apiService
    * @param route
+   * @param categoryService
    */
   constructor(
     private title: TitleService,
     private apiService: APIService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private categoryService: CategoryService
   ) {
   }
 
@@ -65,19 +74,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @public
    */
   public ngOnInit(): void {
-    const subscription = this.apiService.get('posts?page=1&limit=35').subscribe({
-      next: (value: APIResponseList<Post>) => this.image = value.items,
-      error: () => subscription.unsubscribe(),
-      complete: () => subscription.unsubscribe()
-    });
-
     this.categories = this.route.snapshot.data['categories'] ?? [];
+    this.itemsList = this.route.snapshot.data['items'] ?? [];
+    this.items = this.itemsList.items ?? [];
 
     this.title.set('Startseite');
 
     if (!this.activeDropdownItem && this.categories.length > 0) {
+      if (!this.categoryService.category) {
+        this.categoryService.category = this.categories[0];
+      }
+
       // Set first item
-      this.activeDropdownItem = this.categories[0];
+      this.activeDropdownItem = this.categoryService.category;
     }
   }
 
@@ -102,10 +111,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * Select Category
    *
    * @public
-   * @todo after selection to new request with category
-   * and replace the current items with the new one
    */
   public selectCategory(item: PostCategory): void {
+    this.categoryService.category = item;
     this.activeDropdownItem = item;
+
+    const subscription = this.apiService.get<Post>(
+      `category/${item.id}/posts?page=1&limit=35`,
+      {},
+      true
+    ).subscribe({
+      next: response => {
+        this.itemsList = response;
+        this.items = response.items ?? [];
+      },
+      complete: () => subscription.unsubscribe()
+    });
   }
 }

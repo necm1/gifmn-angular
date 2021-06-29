@@ -10,9 +10,9 @@ import {CategoryService} from '../../_service/category.service';
 @Injectable({providedIn: 'root'})
 /**
  * @class ItemsResolver
- * @implements Resolve<Post[]>
+ * @implements Resolve<Post>
  */
-export class ItemsResolver implements Resolve<APIResponseList<Post[]>> {
+export class ItemsResolver implements Resolve<APIResponseList<Post>> {
   /**
    * ItemsResolver Constructor
    *
@@ -36,17 +36,17 @@ export class ItemsResolver implements Resolve<APIResponseList<Post[]>> {
   public resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<APIResponseList<Post[]>> {
+  ): Observable<APIResponseList<Post>> {
     const activeCategory: PostCategory = this.categoryService.category;
 
     if (activeCategory) {
-      return this.apiService.get<Post[]>(
+      return this.apiService.get<Post>(
         `category/${activeCategory.id}/posts?page=1&limit=35`,
         {},
         true
       );
     }
 
-    return this.apiService.get<Post[]>('category/1/posts?page=1&limit=35', {}, true)
+    return this.apiService.get<Post>('category/1/posts?page=1&limit=35', {}, true);
   }
 }
