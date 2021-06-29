@@ -31,10 +31,10 @@ export class CategoryResolver implements Resolve<PostCategory[]> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<PostCategory[]> {
-    return this.apiService
-      .get<PostCategory[]>('categories')
+    return (this.apiService
+      .get<PostCategory[]>('categories') as Observable<APIResponse<PostCategory[]>>)
       .pipe(
-        map((value: APIResponse<PostCategory[]>) => value.data)
-      );
+        map(value => value.data)
+      ) as Observable<PostCategory[]>;
   }
 }

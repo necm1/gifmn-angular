@@ -32,6 +32,7 @@ export class ItemsResolver implements Resolve<APIResponseList<Post>> {
    * @public
    * @param route
    * @param state
+   * @returns Observable<APIResponseList<Post>>
    */
   public resolve(
     route: ActivatedRouteSnapshot,
@@ -44,9 +45,13 @@ export class ItemsResolver implements Resolve<APIResponseList<Post>> {
         `category/${activeCategory.id}/posts?page=1&limit=35`,
         {},
         true
-      );
+      ) as Observable<APIResponseList<Post>>;
     }
 
-    return this.apiService.get<Post>('category/1/posts?page=1&limit=35', {}, true);
+    return this.apiService.get<Post>(
+      'category/1/posts?page=1&limit=35',
+      {},
+      true
+    ) as Observable<APIResponseList<Post>>;
   }
 }

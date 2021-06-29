@@ -7,6 +7,7 @@ import {Post} from '../../_model/post/post.entity';
 import {PostCategory} from '../../_model/post/post-category.entity';
 import {ActivatedRoute} from '@angular/router';
 import {CategoryService} from '../../_service/category.service';
+import {Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -116,11 +117,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.categoryService.category = item;
     this.activeDropdownItem = item;
 
-    const subscription = this.apiService.get<Post>(
+    const subscription: Subscription = (this.apiService.get<Post>(
       `category/${item.id}/posts?page=1&limit=35`,
       {},
       true
-    ).subscribe({
+    ) as Observable<APIResponseList<Post>>).subscribe({
       next: response => {
         this.itemsList = response;
         this.items = response.items ?? [];
