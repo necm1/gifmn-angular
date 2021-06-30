@@ -8,6 +8,7 @@ import {PostCategory} from '../../_model/post/post-category.entity';
 import {ActivatedRoute} from '@angular/router';
 import {CategoryService} from '../../_service/category.service';
 import {Observable, Subscription} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -62,12 +63,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @param apiService
    * @param route
    * @param categoryService
+   * @param translate
    */
   constructor(
     private title: TitleService,
     private apiService: APIService,
     private route: ActivatedRoute,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private translate: TranslateService
   ) {
   }
 
@@ -79,7 +82,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.itemsList = this.route.snapshot.data['items'] ?? [];
     this.items = this.itemsList.items ?? [];
 
-    this.title.set('Startseite');
+    this.title.set(this.translate.instant('home.title'));
 
     if (!this.activeDropdownItem && this.categories.length > 0) {
       if (!this.categoryService.category) {

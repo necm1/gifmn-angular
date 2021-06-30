@@ -19,6 +19,8 @@
     "@angular/platform-browser-dynamic": "~11.0.4",
     "@angular/router": "~11.0.4",
     "@fontsource/open-sans": "^4.4.5",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "bootstrap": "^5.0.1",
     "masonry-layout": "^4.2.2",
     "ngx-bootstrap": "^6.2.0",

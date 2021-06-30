@@ -3,6 +3,10 @@ export const environment = {
   title: 'GifMN',
 
   app: {
-    endpoint: 'http://127.0.0.1:1337'
+    endpoint: 'http://127.0.0.1:1337',
+    language: {
+      default: 'tr',
+      fallback: 'tr'
+    }
   }
 };
