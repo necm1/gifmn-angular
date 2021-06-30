@@ -50,6 +50,13 @@ export class FooterComponent implements OnInit, OnDestroy {
    */
   private currentSubject: BehaviorSubject<boolean>;
 
+  /**
+   * FooterComponent Constructor
+   *
+   * @constructor
+   * @param authService
+   * @param userService
+   */
   constructor(
     private authService: AuthService,
     private userService: UserService

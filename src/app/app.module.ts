@@ -19,6 +19,7 @@ import {AlertService} from './_service/alert.service';
 import {LanguageService} from './_service/language.service';
 
 import {TokenInterceptor} from './_interceptor/token.interceptor';
+import {MetaService} from './_service/meta.service';
 
 registerLocaleData(localeTR);
 
@@ -47,10 +48,9 @@ registerLocaleData(localeTR);
     AlertService,
     {
       provide: LOCALE_ID,
-      useFactory: (languageService) => languageService.getCurrentCulture(),
+      useFactory: (languageService: LanguageService) => languageService.getCurrentCulture(),
       deps: [LanguageService],
-    },
-    LanguageService
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -6,6 +6,7 @@ import {ImageCardComponent} from './component/image-card/image-card.component';
 import {ScrollToTopComponent} from './component/scroll-to-top/scroll-to-top.component';
 import { FooterComponent } from './component/footer/footer.component';
 import {RouterModule} from '@angular/router';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {RouterModule} from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    TranslateModule.forChild()
   ]
 })
 export class LayoutModule {

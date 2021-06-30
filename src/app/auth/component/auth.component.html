@@ -4,14 +4,14 @@
   </a>
 
   <div class="mb-3">
-    <label for="username">Benutzername</label>
+    <label for="username" [translate]="'auth.form.username'"></label>
     <input type="text" formControlName="username" id="username" class="form-control" required autocomplete="username" />
   </div>
 
   <div class="mb-3">
-    <label for="password">Passwort</label>
+    <label for="password" [translate]="'auth.form.password'"></label>
     <input type="password" formControlName="password" id="password" class="form-control" required autocomplete="current-password" />
   </div>
 
-  <button type="submit" class="btn btn-primary align-self-end">Anmelden</button>
+  <button type="submit" class="btn btn-primary align-self-end" [translate]="'auth.form.submit'"></button>
 </form>

@@ -1,14 +1,14 @@
 <div class="footer-shadow" *ngIf="!state" [@slideDown]>
   <ul class="list-unstyled">
-    <li>&copy; GifMN</li>
+    <li>&copy; {{ 'footer.copyright' | translate }}</li>
     <li *ngIf="isAuthenticated">
-      Merhaba {{ user.username }}
+      {{ 'footer.welcome' | translate: {username: user.username} }}
     </li>
     <li *ngIf="isAuthenticated">
-      <a routerLink="/auth/logout">Abmelden</a>
+      <a routerLink="/auth/logout" [translate]="'footer.logout'"></a>
     </li>
     <li *ngIf="!isAuthenticated">
-      <a routerLink="/auth">Anmelden</a>
+      <a routerLink="/auth" [translate]="'footer.login'"></a>
     </li>
   </ul>
 </div>

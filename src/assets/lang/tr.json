@@ -1,5 +1,26 @@
 {
   "home": {
     "title": "Die Magie des Internets"
+  },
+
+  "auth": {
+    "form": {
+      "username": "Benutzername",
+      "password": "Passwort",
+      "submit": "Anmelden"
+    }
+  },
+
+  "header": {
+    "search": {
+      "placeholder": "Suchen"
+    }
+  },
+
+  "footer": {
+    "copyright": "GIFMN",
+    "welcome": "Willkommen {{ username }}",
+    "login": "Anmelden",
+    "logout": "Abmelden"
   }
 }
