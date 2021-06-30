@@ -3,11 +3,23 @@ import {BehaviorSubject, fromEvent, Subscription} from 'rxjs';
 import {AuthService} from '../../../auth/service/auth.service';
 import {User} from '../../../_model/user/user.model';
 import {UserService} from '../../../_service/user.service';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
+  animations: [
+    trigger('slideDown', [
+      transition(':enter', [
+        style({transform: 'translateY(200%)'}),
+        animate('150ms ease-in', style({transform: 'translateY(0%)'}))
+      ]),
+      transition(':leave', [
+        animate('150ms ease-in', style({transform: 'translateY(200%)'}))
+      ])
+    ])
+  ]
 })
 /**
  * @class FooterComponent

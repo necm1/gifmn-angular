@@ -1,6 +1,6 @@
 @use '~src/styles/variables' as var;
 
-:host {
+.footer-shadow {
   background-color: var.$footer-bg;
   width: 100%;
   position: absolute;
