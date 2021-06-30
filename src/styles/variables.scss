@@ -1,3 +1,9 @@
+// Colors
+$blue: #5c69ff;
+$colors: (
+  "blue": $blue
+);
+
 // Body
 $body-bg: rgb(46, 48, 53);
 $body-color: #fff;
@@ -12,10 +18,16 @@ $input-border-color: transparent;
 $input-border-radius: 3px;
 $input-color: #fff;
 $input-font-size: 16px;
-$input-font-weight: 700;
+$input-font-weight: 500;
 $input-box-shadow: unset;
 $input-focus-box-shadow: unset;
 $input-focus-border-color: transparent;
+
+// Button
+$btn-font-size: 14px;
+$btn-font-weight: 400;
+$btn-border-radius: 2px;
+$btn-padding-x: 1.5rem;
 
 // Dropdown
 $dropdown-bg: #53565d;

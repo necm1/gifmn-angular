@@ -6,11 +6,13 @@
 
 @import "~bootstrap/scss/bootstrap";
 @import "~open-iconic/font/css/open-iconic-bootstrap.min.css";
+@import "~@fontsource/open-sans";
 
 html {
   &, body {
     height: 100vh;
     width: 100vw;
     overflow-x: hidden;
+    font-family: 'Open Sans', sans-serif;
   }
 }
