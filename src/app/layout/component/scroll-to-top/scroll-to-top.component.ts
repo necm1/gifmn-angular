@@ -1,6 +1,6 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {fromEvent, interval as observableInterval, Subscription} from "rxjs";
-import {takeWhile, scan, tap, subscribeOn, map, debounceTime} from "rxjs/operators";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {fromEvent, interval as observableInterval, Subscription} from 'rxjs';
+import {takeWhile, scan, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-scroll-to-top',
@@ -16,7 +16,7 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
    * @private
    * @property
    */
-  private $show: boolean = false;
+  private $show = false;
 
   /**
    * @private
@@ -33,14 +33,9 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
     this.subscription = fromEvent(document.body, 'scroll').subscribe({
       next: () => {
         const target = document.body;
-
-        if (target.scrollTop > 10) {
-          this.$show = true;
-        } else {
-          this.$show = false;
-        }
+        this.$show = target.scrollTop > 10;
       }
-    })
+    });
   }
 
   /**
