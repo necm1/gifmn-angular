@@ -51,6 +51,33 @@ export class APIService {
   }
 
   /**
+   * Make POST Request
+   *
+   * @public
+   * @param url
+   * @param options
+   * @param list
+   * @returns Observable<APIResponse<T> | APIResponseList<T>>
+   */
+  public post<T>(
+    url: string,
+    options = {},
+    list = false,
+  ): Observable<APIResponse<T>> | Observable<APIResponseList<T>> {
+    if (list) {
+      return this.http.post<APIResponseList<T>>(
+        this.buildURL(url),
+        options
+      );
+    }
+
+    return this.http.post<APIResponse<T>>(
+      this.buildURL(url),
+      options
+    );
+  }
+
+  /**
    * Build URL With API Endpoint
    *
    * @public

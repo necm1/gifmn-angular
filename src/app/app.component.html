@@ -1,4 +1,11 @@
+<ng-container *ngIf="currentURL !== '/auth'; else auth">
 <app-header class="d-flex flex-column"></app-header>
 <router-outlet></router-outlet>
+<app-footer></app-footer>
 
 <app-scroll-to-top></app-scroll-to-top>
+</ng-container>
+
+<ng-template #auth>
+  <router-outlet></router-outlet>
+</ng-template>

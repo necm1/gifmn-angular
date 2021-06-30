@@ -26,6 +26,7 @@ export class CategoryResolver implements Resolve<PostCategory[]> {
    * @public
    * @param route
    * @param state
+   * @returns Observable<PostCategory[]>
    */
   public resolve(
     route: ActivatedRouteSnapshot,

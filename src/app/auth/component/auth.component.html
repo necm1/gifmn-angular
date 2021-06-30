@@ -1,1 +1,13 @@
-<p>auth works!</p>
+<form class="d-flex flex-column" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="username">Benutzername</label>
+    <input type="text" formControlName="username" id="username" class="form-control" required autocomplete="username" />
+  </div>
+
+  <div class="mb-3">
+    <label for="password">Passwort</label>
+    <input type="password" formControlName="password" id="password" class="form-control" required autocomplete="current-password" />
+  </div>
+
+  <button type="submit" class="btn btm-primary align-self-end">Anmelden</button>
+</form>

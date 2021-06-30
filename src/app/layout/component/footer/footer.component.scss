@@ -1,0 +1,43 @@
+@use '~src/styles/variables' as var;
+
+:host {
+  background-color: var.$footer-bg;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: var.$footer-shadow;
+  height: 50px;
+
+  & > ul {
+    overflow: hidden;
+    margin: 0 1.5rem;
+    font-size: 14px;
+    letter-spacing: .02rem;
+    color: #b4b9c2;
+    display: flex;
+    width: 100%;
+
+    & > li {
+      display: inline-flex;
+      margin: auto 1.2rem;
+
+      &:first-child {
+        font-weight: 700;
+      }
+
+      & > a {
+        color: inherit;
+        line-height: 50px;
+        text-decoration: none;
+        opacity: .8;
+        transition: opacity .25s;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
