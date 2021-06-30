@@ -6,6 +6,7 @@ import {APIService} from '../../_service/api.service';
 import {APIResponse} from '../../_model/api/api-response.model';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {AlertService} from '../../_service/alert.service';
 
 @Component({
   selector: 'app-auth',
@@ -37,12 +38,14 @@ export class AuthComponent implements OnInit, OnDestroy {
    * @param apiService
    * @param formBuilder
    * @param router
+   * @param alert
    */
   constructor(
     private authService: AuthService,
     private apiService: APIService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private alert: AlertService
   ) {
   }
 
@@ -71,9 +74,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     const password = this.f.password.value;
 
     if (!username || !password) {
-      /*this.alertService.error(
-        this.translateService.instant('HOME.FORM.INPUT.EMPTY')
-      );*/
+      this.alert.error(
+        'error bro'
+        //this.translateService.instant('HOME.FORM.INPUT.EMPTY')
+      );
       return;
     }
 

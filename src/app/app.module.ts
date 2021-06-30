@@ -11,6 +11,7 @@ import {NotFoundComponent} from './not-found/not-found.component';
 
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {TokenInterceptor} from './_interceptor/token.interceptor';
+import {AlertService} from './_service/alert.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {TokenInterceptor} from './_interceptor/token.interceptor';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    AlertService
   ],
   bootstrap: [AppComponent]
 })

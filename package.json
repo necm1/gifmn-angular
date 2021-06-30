@@ -24,6 +24,7 @@
     "ngx-bootstrap": "^6.2.0",
     "ngx-masonry": "^11.0.2",
     "ngx-quicklink": "^0.2.7",
+    "notyf": "^3.10.0",
     "open-iconic": "^1.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
