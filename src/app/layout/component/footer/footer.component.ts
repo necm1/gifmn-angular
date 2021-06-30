@@ -1,5 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BehaviorSubject, fromEvent, Subscription} from 'rxjs';
+import {AuthService} from '../../../auth/service/auth.service';
+import {User} from '../../../_model/user/user.model';
+import {UserService} from '../../../_service/user.service';
 
 @Component({
   selector: 'app-footer',
@@ -12,6 +15,18 @@ import {BehaviorSubject, fromEvent, Subscription} from 'rxjs';
  */
 export class FooterComponent implements OnInit, OnDestroy {
   /**
+   * @public
+   * @property
+   */
+  public user: User;
+
+  /**
+   * @public
+   * @property
+   */
+  public isAuthenticated = false;
+
+  /**
    * @private
    * @property
    */
@@ -23,6 +38,12 @@ export class FooterComponent implements OnInit, OnDestroy {
    */
   private currentSubject: BehaviorSubject<boolean>;
 
+  constructor(
+    private authService: AuthService,
+    private userService: UserService
+  ) {
+  }
+
   /**
    * Handle Component Initialization
    *
@@ -30,6 +51,9 @@ export class FooterComponent implements OnInit, OnDestroy {
    */
   public ngOnInit(): void {
     this.currentSubject = new BehaviorSubject<boolean>(false);
+    this.isAuthenticated = !!this.authService.token;
+
+    this.user = this.userService.user ?? {} as User;
 
     this.subscription = fromEvent(document.body, 'scroll').subscribe({
       next: () => {

@@ -1,6 +1,12 @@
 <ul class="list-unstyled">
   <li>&copy; GifMN</li>
-  <li>
+  <li *ngIf="isAuthenticated">
+    Merhaba {{ user.username }}
+  </li>
+  <li *ngIf="isAuthenticated">
+    <a routerLink="/auth/logout">Abmelden</a>
+  </li>
+  <li *ngIf="!isAuthenticated">
     <a routerLink="/auth">Anmelden</a>
   </li>
 </ul>

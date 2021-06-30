@@ -1,19 +1,19 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {QuicklinkStrategy} from 'ngx-quicklink';
-import {GuestGuard} from './_guard/guest.guard';
 import {NotFoundComponent} from './not-found/not-found.component';
+import {UserGuard} from './_guard/user.guard';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
     pathMatch: 'full',
+    canActivate: [UserGuard]
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    canActivate: [GuestGuard]
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
   },
   {
     path: '404',

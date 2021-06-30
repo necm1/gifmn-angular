@@ -29,6 +29,15 @@ export class AuthService {
   }
 
   /**
+   * Clear Token
+   *
+   * @public
+   */
+  public clearToken(): void {
+    localStorage.removeItem('gifmn-token');
+  }
+
+  /**
    * Get Current Token
    *
    * @public
