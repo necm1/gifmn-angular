@@ -1,0 +1,23 @@
+<div class="gallery-page"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <div class="d-flex flex-grow-1 gallery-title">{{post.title}}</div>
+      <div class="gallery-description">{{post.description}}</div>
+
+      <ng-container *ngFor="let item of post.attachments">
+        <div class="gallery-media">
+          <img *ngIf="item.type === 'IMAGE'" class="img-fluid image-placeholder" [src]="'https://imgur.com/'+item.url+'.jpg'" />
+          <img *ngIf="item.type === 'IMAGE'" class="img-fluid" [src]="'https://imgur.com/'+item.url+'.jpg'" loading="lazy" />
+        </div>
+
+        <div class="gallery-description" *ngIf="item.description">{{item.description}}</div>
+      </ng-container>
+    </div>
+
+    <div class="col-4">
+      asdasdas
+    </div>
+  </div>
+</div>

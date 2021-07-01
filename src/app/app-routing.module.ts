@@ -16,6 +16,11 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
   },
   {
+    path: 'gallery',
+    loadChildren: () => import('./gallery/gallery.module').then((m) => m.GalleryModule),
+    canActivate: [UserGuard]
+  },
+  {
     path: '404',
     component: NotFoundComponent
   },

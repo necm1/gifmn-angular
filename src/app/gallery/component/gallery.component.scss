@@ -1,0 +1,32 @@
+.gallery-title {
+  font-size: 28px;
+  line-height: 130%;
+  color: #fff;
+}
+
+.gallery-description {
+  margin-bottom: 24px;
+  font-size: 16px;
+  line-height: 150%;
+  color: hsla(0,0%,100%,.9);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.gallery-media {
+  max-width: 100%;
+  margin-bottom: 24px;
+  background-color: rgba(0,0,0,.1);
+  min-height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .image-placeholder {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: .01;
+  }
+}
