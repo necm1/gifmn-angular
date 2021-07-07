@@ -17,6 +17,20 @@
     }
   },
 
+  "tags": {
+    "modal": {
+      "title": "Tag \"{{ title }}\" - Bearbeiten",
+      "footer": {
+        "delete": "Tag Löschen",
+        "save": "Änderungen Übernehmen"
+      }
+    },
+
+    "delete": {
+      "success": "Tag wurde gelöscht!"
+    }
+  },
+
   "scroll": "Scroll to Top",
 
   "footer": {

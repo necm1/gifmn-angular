@@ -78,6 +78,24 @@ export class APIService {
   }
 
   /**
+   * Make DELETE Request
+   *
+   * @public
+   * @param url
+   * @param options
+   * @returns Observable<APIResponse<T>
+   */
+  public del<T>(
+    url: string,
+    options = {}
+  ): Observable<APIResponse<T>>{
+    return this.http.delete<APIResponse<T>>(
+      this.buildURL(url),
+      options
+    );
+  }
+
+  /**
    * Build URL With API Endpoint
    *
    * @public

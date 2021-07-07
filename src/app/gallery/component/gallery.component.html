@@ -10,6 +10,8 @@
           <li
             class="badge rounded-pill"
             [style.background-color]="getRandomizedColors() | randomBackground"
+            [class.c-pointer]="isAuthenticated"
+            (click)="onTagClick(tag)"
             *ngFor="let tag of post.tags">#{{tag.name}}</li>
         </ul>
       </div>

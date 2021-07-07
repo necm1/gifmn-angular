@@ -15,7 +15,7 @@ export class AlertService {
   private notyf: Notyf;
 
   /**
-   * ALertService Constructor
+   * AlertService Constructor
    *
    * @constructor
    */
@@ -36,5 +36,18 @@ export class AlertService {
     }
 
     return this.notyf.error(message);
+  }
+
+  /**
+   * @public
+   * @param message
+   * @returns NotyfNotification
+   */
+  public success(message: string | Partial<INotyfNotificationOptions>): NotyfNotification {
+    if (!message) {
+      return;
+    }
+
+    return this.notyf.success(message);
   }
 }

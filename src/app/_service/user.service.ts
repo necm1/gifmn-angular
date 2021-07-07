@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {APIService} from './api.service';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../_model/user/user.model';
 import {APIResponse} from '../_model/api/api-response.model';
 import {map} from 'rxjs/operators';
+import {AuthService} from '../auth/service/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,12 @@ export class UserService {
    *
    * @constructor
    * @param apiService
+   * @param authService
    */
-  constructor(private apiService: APIService) {
+  constructor(
+    private apiService: APIService,
+    private authService: AuthService
+  ) {
     let user: User = JSON.parse(localStorage.getItem('gifmn-user'));
 
     if (!user) {
@@ -57,6 +62,10 @@ export class UserService {
    * @returns User
    */
   public get user(): User {
+    if (!this.authService.token) {
+      return undefined;
+    }
+
     return this.userSubject.value;
   }
 

@@ -3,6 +3,10 @@ import {ActivatedRoute} from '@angular/router';
 import {Post} from '../../_model/post/post.entity';
 import {TitleService} from '../../_service/title.service';
 import {environment} from '../../../environment';
+import {UserService} from '../../_service/user.service';
+import {PostTag} from '../../_model/post/post-tag.entity';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {TagEditModalComponent} from '../../layout/component/tag-edit-modal/tag-edit-modal.component';
 
 @Component({
   selector: 'app-gallery',
@@ -27,9 +31,26 @@ export class GalleryComponent implements OnInit, OnDestroy {
    */
   private $colors: string[] = environment.tags.colors;
 
+  /**
+   * @private
+   * @property
+   */
+  private modalRef: BsModalRef;
+
+  /**
+   * GalleryComponent Constructor
+   *
+   * @constructor
+   * @param route
+   * @param title
+   * @param userService
+   * @param modalService
+   */
   constructor(
     private route: ActivatedRoute,
-    private title: TitleService
+    private title: TitleService,
+    private userService: UserService,
+    private modalService: BsModalService
   ) {
   }
 
@@ -45,6 +66,25 @@ export class GalleryComponent implements OnInit, OnDestroy {
     document.body.classList.add('gallery-page');
 
     this.title.set(this.post.title);
+  }
+
+  /**
+   * Handle Tag Remove
+   *
+   * @public
+   * @param tag
+   */
+  public onTagClick(tag: PostTag): void {
+    if (!tag || !this.isAuthenticated) {
+      return;
+    }
+
+    this.modalRef = this.modalService.show(TagEditModalComponent, {
+      initialState: {tag},
+      backdrop: true,
+      ignoreBackdropClick: true,
+      keyboard: false
+    });
   }
 
   /**
@@ -74,5 +114,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
     // our result is always different
     // that's why we take the first index
     return array[0];
+  }
+
+  public get isAuthenticated(): boolean {
+    return !!this.userService.user;
   }
 }
