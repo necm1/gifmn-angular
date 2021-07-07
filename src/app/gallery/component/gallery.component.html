@@ -2,21 +2,33 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-8">
-      <div class="d-flex flex-grow-1 gallery-title">{{post.title}}</div>
+    <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12">
+      <div class="d-flex flex-row align-items-center">
+        <div class="flex-grow-1 gallery-title">{{post.title}}</div>
+
+        <ul class="list-unstyled gallery-tags mb-0">
+          <li
+            class="badge rounded-pill"
+            [style.background-color]="getRandomizedColors() | randomBackground"
+            *ngFor="let tag of post.tags">#{{tag.name}}</li>
+        </ul>
+      </div>
+
       <div class="gallery-description">{{post.description}}</div>
 
       <ng-container *ngFor="let item of post.attachments">
         <div class="gallery-media">
-          <img *ngIf="item.type === 'IMAGE'" class="img-fluid image-placeholder" [src]="'https://imgur.com/'+item.url+'.jpg'" />
-          <img *ngIf="item.type === 'IMAGE'" class="img-fluid" [src]="'https://imgur.com/'+item.url+'.jpg'" loading="lazy" />
+          <img *ngIf="item.type === 'IMAGE'" class="img-fluid image-placeholder"
+               [src]="'https://imgur.com/'+item.url+'.jpg'"/>
+          <img *ngIf="item.type === 'IMAGE'" class="img-fluid" [src]="'https://imgur.com/'+item.url+'.jpg'"
+               loading="lazy"/>
         </div>
 
         <div class="gallery-description" *ngIf="item.description">{{item.description}}</div>
       </ng-container>
     </div>
 
-    <div class="col-4">
+    <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12">
       asdasdas
     </div>
   </div>

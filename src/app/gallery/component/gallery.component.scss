@@ -30,3 +30,11 @@
     opacity: .01;
   }
 }
+
+.gallery-tags {
+  & > li {
+    &:not(:last-child) {
+      margin-right: .5rem;
+    }
+  }
+}

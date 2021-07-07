@@ -17,6 +17,8 @@
     }
   },
 
+  "scroll": "Scroll to Top",
+
   "footer": {
     "copyright": "GIFMN",
     "welcome": "Willkommen {{ username }}",
