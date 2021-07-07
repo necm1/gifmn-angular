@@ -8,5 +8,12 @@ export const environment = {
       default: 'tr',
       fallback: 'tr'
     }
+  },
+
+  tags: {
+    colors: [
+      '#405de6', '#5851db', '#833ab4', '#c13584', '#e1306c', '#fd1d1d',
+      '#1D89F4', '#d33131'
+    ]
   }
 };

@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/co
 import {ActivatedRoute} from '@angular/router';
 import {Post} from '../../_model/post/post.entity';
 import {TitleService} from '../../_service/title.service';
+import {environment} from '../../../environment';
 
 @Component({
   selector: 'app-gallery',
@@ -24,10 +25,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
    * @private
    * @property
    */
-  private $colors: string[] = [
-    '#405de6', '#5851db', '#833ab4', '#c13584', '#e1306c', '#fd1d1d',
-    '#1D89F4', '#d33131'
-  ];
+  private $colors: string[] = environment.tags.colors;
 
   constructor(
     private route: ActivatedRoute,
