@@ -43,7 +43,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.post = this.route.snapshot.data['post'];
 
-    document.getElementsByTagName('app-header')[0].classList.add('bg-transparent');
+    document.getElementsByTagName('app-header')[0]?.classList.add('bg-transparent');
     document.body.classList.add('gallery-page');
 
     this.title.set(this.post.title);
@@ -55,7 +55,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
    * @public
    */
   public ngOnDestroy(): void {
-    document.getElementsByTagName('app-header')[0].classList.remove('bg-transparent');
+    document.getElementsByTagName('app-header')[0]?.classList.remove('bg-transparent');
     document.body.classList.remove('gallery-page');
   }
 
