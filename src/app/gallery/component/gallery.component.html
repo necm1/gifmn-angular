@@ -7,12 +7,19 @@
         <div class="flex-grow-1 gallery-title">{{post.title}}</div>
 
         <ul class="list-unstyled gallery-tags mb-0">
-          <li
-            class="badge rounded-pill"
-            [style.background-color]="getRandomizedColors() | randomBackground"
-            [class.c-pointer]="isAuthenticated"
-            (click)="onTagClick(tag)"
-            *ngFor="let tag of post.tags">#{{tag.name}}</li>
+          <li *ngFor="let tag of post.tags">
+            <ng-container *ngIf="isAuthenticated; else guest">
+              <span class="badge rounded-pill"
+                    [style.background-color]="getRandomizedColors() | randomBackground"
+                    [class.c-pointer]="isAuthenticated"
+                    (click)="onTagClick(tag)">#{{tag.name}}</span>
+            </ng-container>
+
+            <ng-template #guest>
+              <span class="badge rounded-pill"
+                    [style.background-color]="getRandomizedColors() | randomBackground">#{{tag.name}}</span>
+            </ng-template>
+          </li>
         </ul>
       </div>
 
