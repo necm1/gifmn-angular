@@ -21,6 +21,12 @@ export class TagEditModalComponent implements OnInit {
    * @public
    * @property
    */
+  public input: string;
+
+  /**
+   * @public
+   * @property
+   */
   public tag: PostTag;
 
   /**
@@ -52,6 +58,18 @@ export class TagEditModalComponent implements OnInit {
     }
   }
 
+  public onTagSave(): void {
+    if (!this.tag || !this.isAuthenticated || !this.input) {
+      this.bsModalRef.hide();
+      return;
+    }
+  }
+
+  /**
+   * Handle Tag Delete
+   *
+   * @public
+   */
   public onTagDelete(): void {
     if (!this.tag || !this.isAuthenticated) {
       this.bsModalRef.hide();

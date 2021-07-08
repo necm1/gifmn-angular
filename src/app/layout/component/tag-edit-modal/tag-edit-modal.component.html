@@ -1,9 +1,9 @@
 <div class="modal-header">
   <h5 class="modal-title">{{ 'tags.modal.title' | translate: {title: tag.name} }}</h5>
-  <button type="button" class="btn-close" aria-label="Close" (click)="bsModalRef.hide()"></button>
+  <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="bsModalRef.hide()"></button>
 </div>
-<div class="modal-body">
-  ...
+<div class="modal-body d-flex justify-content-center align-items-lg-center">
+  <input type="text" class="form-control" [placeholder]="tag.name" [(ngModel)]="input" required autofocus />
 </div>
 <div class="modal-footer">
   <button
@@ -14,5 +14,6 @@
   <button
     type="button"
     class="btn btn-outline-success"
+    (click)="onTagSave()"
     [translate]="'tags.modal.footer.save'"></button>
 </div>

@@ -8,6 +8,7 @@ import {FooterComponent} from './component/footer/footer.component';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {TagEditModalComponent} from './component/tag-edit-modal/tag-edit-modal.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {TagEditModalComponent} from './component/tag-edit-modal/tag-edit-modal.c
   imports: [
     CommonModule,
     RouterModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    FormsModule
   ]
 })
 export class LayoutModule {
