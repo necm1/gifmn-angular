@@ -5,7 +5,7 @@ import {ExceptionResponse} from './exception-response.model';
  */
 export interface APIResponse<T> {
   status: number;
-  data?: T[] | T;
+  data?: T;
   error?: string | ExceptionResponse;
   errors?: [];
 }

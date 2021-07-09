@@ -28,7 +28,9 @@
 
     "delete": {
       "success": "Tag wurde gelöscht!"
-    }
+    },
+
+    "update": "Tag \"{{ title }}\" wurde geändert in \"{{ new }}\""
   },
 
   "scroll": "Scroll to Top",

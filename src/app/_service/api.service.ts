@@ -57,13 +57,13 @@ export class APIService {
    * @param url
    * @param options
    * @param list
-   * @returns Observable<APIResponse<T> | APIResponseList<T>>
+   * @returns {Observable<APIResponse<T>, APIResponseList<T>>}
    */
   public post<T>(
     url: string,
     options = {},
     list = false,
-  ): Observable<APIResponse<T>> | Observable<APIResponseList<T>> {
+  ): (Observable<APIResponse<T>> | Observable<APIResponseList<T>>) {
     if (list) {
       return this.http.post<APIResponseList<T>>(
         this.buildURL(url),
@@ -91,6 +91,27 @@ export class APIService {
   ): Observable<APIResponse<T>>{
     return this.http.delete<APIResponse<T>>(
       this.buildURL(url),
+      options
+    );
+  }
+
+  /**
+   * Make PUT Request
+   *
+   * @public
+   * @param url
+   * @param body
+   * @param options
+   * @returns Observable<APIResponse<T>
+   */
+  public put<T>(
+    url: string,
+    body = {},
+    options = {}
+  ): Observable<APIResponse<T>> {
+    return this.http.put<APIResponse<T>>(
+      this.buildURL(url),
+      body,
       options
     );
   }

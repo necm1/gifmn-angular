@@ -58,11 +58,30 @@ export class TagEditModalComponent implements OnInit {
     }
   }
 
+  /**
+   * Save Changes
+   *
+   * @public
+   */
   public onTagSave(): void {
     if (!this.tag || !this.isAuthenticated || !this.input) {
       this.bsModalRef.hide();
       return;
     }
+
+    const tagName = this.tag.name;
+    this.tag.name = this.input;
+
+    const subscription: Subscription = this.tagService.update(this.tag).subscribe({
+      next: value => {
+        this.alertService.success(this.translate.instant('tags.update', {
+          title: tagName,
+          new: value.data.name
+        }));
+      },
+      error: (err) => this.alertService.error(err),
+      complete: () => subscription.unsubscribe()
+    });
   }
 
   /**
