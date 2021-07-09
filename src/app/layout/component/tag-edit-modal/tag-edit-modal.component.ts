@@ -78,6 +78,8 @@ export class TagEditModalComponent implements OnInit {
           title: tagName,
           new: value.data.name
         }));
+
+        this.bsModalRef.hide();
       },
       error: (err) => this.alertService.error(err),
       complete: () => subscription.unsubscribe()
