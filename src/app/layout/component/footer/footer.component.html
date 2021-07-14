@@ -7,6 +7,9 @@
     <li *ngIf="isAuthenticated">
       <a routerLink="/auth/logout" [translate]="'footer.logout'"></a>
     </li>
+    <li *ngIf="isAuthenticated">
+      <a routerLink="/upload" [translate]="'footer.upload'"></a>
+    </li>
     <li *ngIf="!isAuthenticated">
       <a routerLink="/auth" [translate]="'footer.login'"></a>
     </li>

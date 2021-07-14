@@ -1,0 +1,44 @@
+:host {
+  .gallery-title {
+    font-size: 1.5rem
+  }
+
+  .form-control {
+    background-color: transparent;
+
+    &::placeholder {
+      color: #fff;
+      font-weight: bold;
+      font-style: italic;
+    }
+  }
+
+  .btn-glow {
+    background: linear-gradient(348.44deg, #00beca -1.87%, #35ae9f 107.98%);
+    border-radius: 64px;
+    border: 0;
+    padding: 11px 35px 11px 21px;
+    box-shadow: 0 5px 12px 0 rgb(46 189 123 / 40%);
+    color: #eff1f4;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .btn-success {
+    background: linear-gradient(
+        345.02deg, #2fbe7c -1.87%, #3ad7c5 107.98%);
+    border: unset;
+    font-weight: 600;
+  }
+}
+
+textarea.form-control {
+  overflow:hidden;
+  resize:none;
+  padding-top: 1rem;
+  font-size: 15px;
+
+  &:focus {
+    background: unset;
+  }
+}

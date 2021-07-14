@@ -33,12 +33,34 @@
     "update": "Tag \"{{ title }}\" wurde geändert in \"{{ new }}\""
   },
 
+  "upload": {
+    "title": "Bild / Video hochladen",
+    "add": {
+      "title": "Gebe einen Titel ein",
+      "image": "Bild hinzufügen",
+      "tag": "Tag hinzufügen",
+      "description": "Beschreibung hinzufügen",
+      "category": "Kategorie auswählen"
+    },
+    "preview": {
+      "drop": "Bild hier ablassen",
+      "description": "Beschreibe das Bild"
+    },
+    "error": {
+      "title": "Gebe einen Titel ein",
+      "category": "Bitte wähle eine Kategorie aus!",
+      "image": "Du musst mindestens 1 Bild hochladen"
+    },
+    "save": "Speichern"
+  },
+
   "scroll": "Scroll to Top",
 
   "footer": {
     "copyright": "GIFMN",
     "welcome": "Willkommen {{ username }}",
     "login": "Anmelden",
-    "logout": "Abmelden"
+    "logout": "Abmelden",
+    "upload": "Hochladen"
   }
 }

@@ -9,7 +9,8 @@ import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {TagEditModalComponent} from './component/tag-edit-modal/tag-edit-modal.component';
 import {FormsModule} from '@angular/forms';
-
+import { UploadContainerComponent } from './component/upload-container/upload-container.component';
+import { TagBadgeComponent } from './component/tag-badge/tag-badge.component';
 
 @NgModule({
   declarations: [
@@ -18,14 +19,18 @@ import {FormsModule} from '@angular/forms';
     ImageCardComponent,
     ScrollToTopComponent,
     FooterComponent,
-    TagEditModalComponent
+    TagEditModalComponent,
+    UploadContainerComponent,
+    TagBadgeComponent
   ],
   exports: [
     HeaderComponent,
     ImageCardComponent,
     ScrollToTopComponent,
     FooterComponent,
-    TagEditModalComponent
+    TagEditModalComponent,
+    UploadContainerComponent,
+    TagBadgeComponent
   ],
   imports: [
     CommonModule,

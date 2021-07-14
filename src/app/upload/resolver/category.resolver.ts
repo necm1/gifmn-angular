@@ -1,46 +1,41 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {PostCategory} from '../../_model/post/post-category.entity';
 import {Observable} from 'rxjs';
 import {APIService} from '../../_service/api.service';
 import {APIResponse} from '../../_model/api/api-response.model';
 import {map} from 'rxjs/operators';
-import {Post} from '../../_model/post/post.entity';
 
 @Injectable({ providedIn: 'root' })
 /**
- * @class PostResolver
- * @implements Resolve<Post>
+ * @class CategoryResolver
+ * @implements Resolve<PostCategory[]>
  */
-export class PostResolver implements Resolve<Post> {
+export class CategoryResolver implements Resolve<PostCategory[]> {
   /**
    * CategoryResolver Constructor
    *
    * @constructor
    * @param apiService
-   * @param router
    */
-  constructor(
-    private apiService: APIService,
-    private router: Router
-  ) {}
+  constructor(private apiService: APIService) {}
 
   /**
-   * Resolve Post
+   * Resolve Categories
    *
    * @public
    * @param route
    * @param state
-   * @returns Observable<Post>
+   * @returns Observable<PostCategory[]>
    */
   public resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<Post> {
+  ): Observable<PostCategory[]> {
     return (this.apiService
-      .get<Post>(`post/${route.paramMap.get('id')}`) as Observable<APIResponse<Post>>)
+      .get<PostCategory[]>('categories') as Observable<APIResponse<PostCategory[]>>)
       .pipe(
         map(value => value.data)
-      ) as Observable<Post>;
+      ) as Observable<PostCategory[]>;
   }
 }

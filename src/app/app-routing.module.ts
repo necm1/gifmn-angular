@@ -3,6 +3,8 @@ import {Routes, RouterModule} from '@angular/router';
 import {QuicklinkStrategy} from 'ngx-quicklink';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {UserGuard} from './_guard/user.guard';
+import {GuestGuard} from './_guard/guest.guard';
+import {AuthGuard} from './_guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,6 +16,11 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
+  },
+  {
+    path: 'upload',
+    loadChildren: () => import('./upload/upload.module').then(m => m.UploadModule),
+    canActivate: [UserGuard, AuthGuard]
   },
   {
     path: 'gallery',

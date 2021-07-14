@@ -1,11 +1,11 @@
 <ng-container *ngIf="imageItem.attachments[0]?.type === 'VIDEO'; else image">
   <video (loadedmetadata)="handleVideoLoad($event)" playsinline="true" autoplay="true" class="video">
-    <source type="video/mp4" [src]="imageItem.attachments[0].url">
+    <source type="video/mp4" [src]="getEndpoint(imageItem.attachments[0]?.url + '.mp4')">
   </video>
 </ng-container>
 
 <ng-template #image>
-  <img [src]="imageItem.attachments[0]?.url" class="card-img-top" [alt]="imageItem.title" [title]="imageItem.title" />
+  <img [src]="getEndpoint(imageItem.attachments[0]?.url + '.jpeg')" class="card-img-top" [alt]="imageItem.title" [title]="imageItem.title" />
 </ng-template>
 
 <div class="p-3 image-meta">

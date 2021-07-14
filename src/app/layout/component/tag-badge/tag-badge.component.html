@@ -1,0 +1,2 @@
+<input (focusout)="onInputFocusOut($event)" type="text" class="bg-transparent" [(ngModel)]="text" placeholder="text eingeben" />
+<span style="display: none" *ngIf="text" #tag>{{text}}</span>

@@ -1,0 +1,30 @@
+textarea.form-control {
+  overflow:hidden;
+  resize:none;
+  padding-top: 1rem;
+  font-size: 15px;
+
+  &:focus {
+    background: unset;
+  }
+}
+
+.card {
+  border-radius: 6px;
+  box-shadow: 0 0 41px 4px rgb(0 0 0 / 50%);
+
+  .card-img-top {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    min-height: 240px;
+    border-radius: 6px 6px 0 0;
+    overflow: hidden;
+  }
+
+  &::after {
+    background: unset;
+  }
+}

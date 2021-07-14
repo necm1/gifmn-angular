@@ -1,0 +1,41 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12">
+      <div class="d-flex flex-row align-items-center mb-3">
+        <input class="form-control flex-grow-1 gallery-title" [(ngModel)]="title" [placeholder]="'upload.add.title' | translate">
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-footer">
+          <textarea class="form-control card-footer" [(ngModel)]="description" [placeholder]="'upload.add.description' | translate"></textarea>
+        </div>
+      </div>
+
+      <ng-template #uploadContainer></ng-template>
+
+      <div class="d-flex flex-row align-items-center justify-content-center">
+        <button type="button" class="btn btn-glow" [translate]="'upload.add.image'" (click)="onAddContainerClick()"></button>
+      </div>
+    </div>
+
+    <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12">
+      <div class="d-flex flex-column">
+        <div *ngIf="categories && categories.length > 0" class="mb-2">
+          <label for="category" [translate]="'upload.add.category'"></label>
+          <select id="category" class="form-select" [(ngModel)]="categorySelect">
+            <option [value]="category.id" *ngFor="let category of categories">
+              {{category.name}}
+            </option>
+          </select>
+        </div>
+        <div class="d-inline-flex flex-wrap">
+          <ul class="list-unstyled">
+            <ng-template #tagsContainer></ng-template>
+            <li class="badge rounded-5 bg-dark c-pointer" (click)="addTag()" [translate]="'upload.add.tag'"></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-success rounded-3" (click)="onSave()" [translate]="'upload.save'"></button>
+      </div>
+    </div>
+  </div>
+</div>

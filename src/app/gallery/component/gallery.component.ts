@@ -98,6 +98,15 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * @public
+   * @param item
+   * @returns string
+   */
+  public getEndpoint(item: string): string {
+    return `${environment.app.imageEndpoint}/${item}`;
+  }
+
+  /**
    * Shuffle Colors
    *
    * @public

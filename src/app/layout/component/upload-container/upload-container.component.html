@@ -1,0 +1,20 @@
+<div class="card card-default d-flex flex-column mb-4">
+  <div *ngIf="image && image.file.type.startsWith('image')" class="card-img-top flex-grow-1">
+    <img class="img-fluid" [src]="image.url" />
+  </div>
+
+  <div *ngIf="image && image.file.type.startsWith('video')" class="card-img-top flex-grow-1">
+    <video (loadedmetadata)="handleVideoLoad($event)" playsinline="true" autoplay="true" class="video">
+      <source type="video/mp4" [src]="image.url">
+    </video>
+  </div>
+
+  <div
+    *ngIf="!image"
+    class="d-flex align-items-center justify-content-center p-5"
+    [translate]="'upload.preview.drop'"
+  >
+  </div>
+
+  <textarea class="form-control card-footer" [(ngModel)]="description" [placeholder]="'upload.preview.description' | translate"></textarea>
+</div>

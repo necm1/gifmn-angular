@@ -1,5 +1,6 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {Post} from '../../../_model/post/post.entity';
+import {environment} from '../../../../environment';
 
 @Component({
   selector: 'app-image-card',
@@ -32,6 +33,15 @@ export class ImageCardComponent implements OnInit {
    */
   public ngOnInit(): void {
     this.ref.nativeElement.classList.add('card');
+  }
+
+  /**
+   * @public
+   * @param item
+   * @returns string
+   */
+  public getEndpoint(item: string): string {
+    return `${environment.app.imageEndpoint}/${item}`;
   }
 
   /**

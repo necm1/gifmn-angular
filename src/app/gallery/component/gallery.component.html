@@ -1,26 +1,25 @@
-<div class="gallery-page"></div>
-
 <div class="container">
   <div class="row">
     <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12">
       <div class="d-flex flex-row align-items-center">
         <div class="flex-grow-1 gallery-title">{{post.title}}</div>
-
-        <ul class="list-unstyled gallery-tags mb-0">
-          <li *ngFor="let tag of post.tags">
-            <ng-container *ngIf="isAuthenticated; else guest">
+        <ng-container *ngIf="post.tags">
+          <ul class="list-unstyled gallery-tags mb-0">
+            <li *ngFor="let tag of post.tags">
+              <ng-container *ngIf="isAuthenticated; else guest">
               <span class="badge rounded-pill"
                     [style.background-color]="getRandomizedColors() | randomBackground"
                     [class.c-pointer]="isAuthenticated"
                     (click)="onTagClick(tag)">#{{tag.name}}</span>
-            </ng-container>
+              </ng-container>
 
-            <ng-template #guest>
+              <ng-template #guest>
               <span class="badge rounded-pill"
                     [style.background-color]="getRandomizedColors() | randomBackground">#{{tag.name}}</span>
-            </ng-template>
-          </li>
-        </ul>
+              </ng-template>
+            </li>
+          </ul>
+        </ng-container>
       </div>
 
       <div class="gallery-description">{{post.description}}</div>
@@ -28,9 +27,13 @@
       <ng-container *ngFor="let item of post.attachments">
         <div class="gallery-media">
           <img *ngIf="item.type === 'IMAGE'" class="img-fluid image-placeholder"
-               [src]="'https://imgur.com/'+item.url+'.jpg'"/>
-          <img *ngIf="item.type === 'IMAGE'" class="img-fluid" [src]="'https://imgur.com/'+item.url+'.jpg'"
+               [src]="getEndpoint(item.url + '.jpeg')"/>
+          <img *ngIf="item.type === 'IMAGE'" class="img-fluid" [src]="getEndpoint(item.url + '.jpeg')"
                loading="lazy"/>
+
+          <video *ngIf="item.type === 'VIDEO'" playsinline="true" autoplay="true" class="video">
+            <source type="video/mp4" [src]="getEndpoint(item.url + '.mp4')">
+          </video>
         </div>
 
         <div class="gallery-description" *ngIf="item.description">{{item.description}}</div>

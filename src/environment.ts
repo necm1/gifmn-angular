@@ -7,7 +7,9 @@ export const environment = {
     language: {
       default: 'tr',
       fallback: 'tr'
-    }
+    },
+
+    imageEndpoint: 'http://127.0.0.1:8080'
   },
 
   tags: {
