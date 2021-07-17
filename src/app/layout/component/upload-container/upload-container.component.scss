@@ -9,9 +9,25 @@ textarea.form-control {
   }
 }
 
+.attachment-delete {
+  position: absolute;
+  right: .5rem;
+  top: 1rem;
+  opacity: 0;
+  transition: 250ms opacity;
+  background: rgb(255 9 9 / 57%);
+  z-index: 1;
+}
+
 .card {
   border-radius: 6px;
   box-shadow: 0 0 41px 4px rgb(0 0 0 / 50%);
+
+  &:hover {
+    & .attachment-delete {
+      opacity: 1;
+    }
+  }
 
   .card-img-top {
     position: relative;

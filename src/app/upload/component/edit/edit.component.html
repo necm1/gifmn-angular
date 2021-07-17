@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12">
       <div class="d-flex flex-row align-items-center mb-3">
-        <input class="form-control flex-grow-1 gallery-title" [(ngModel)]="title" [placeholder]="'upload.add.title' | translate">
+        <input class="form-control flex-grow-1 gallery-title" [(ngModel)]="title" [placeholder]="post.title">
       </div>
 
-      <div class="card m-b-4">
+      <div class="card mb-4">
         <div class="card-footer">
-          <textarea class="form-control card-footer" [(ngModel)]="description" [placeholder]="'upload.add.description' | translate"></textarea>
+          <textarea class="form-control card-footer" [(ngModel)]="description" [placeholder]="postDescription"></textarea>
         </div>
       </div>
 

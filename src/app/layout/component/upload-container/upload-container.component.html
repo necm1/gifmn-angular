@@ -1,11 +1,15 @@
-<div class="card card-default d-flex flex-column mb-4">
+<div class="card card-default d-flex flex-column mb-4 position-relative">
+  <div class="attachment-delete rounded-circle p-2">
+    <button type="button" class="c-pointer btn-close btn-close-white" (click)="deleteAttachment()"></button>
+  </div>
+
   <div *ngIf="image && image.file.type.startsWith('image')" class="card-img-top flex-grow-1">
-    <img class="img-fluid" [src]="image.url" />
+    <img class="img-fluid" [src]="getEndpoint(image.url, image.file.type)" />
   </div>
 
   <div *ngIf="image && image.file.type.startsWith('video')" class="card-img-top flex-grow-1">
     <video (loadedmetadata)="handleVideoLoad($event)" playsinline="true" autoplay="true" class="video">
-      <source type="video/mp4" [src]="image.url">
+      <source type="video/mp4" [src]="getEndpoint(image.url, image.file.type)">
     </video>
   </div>
 

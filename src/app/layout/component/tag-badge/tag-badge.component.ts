@@ -1,16 +1,22 @@
-import {Component, OnInit, EventEmitter, Output, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild, ViewContainerRef} from '@angular/core';
 
 @Component({
   selector: 'app-tag-badge',
   templateUrl: './tag-badge.component.html',
   styleUrls: ['./tag-badge.component.scss']
 })
-export class TagBadgeComponent implements OnInit {
+export class TagBadgeComponent {
   /**
    * @public
    * @property
    */
   public id: number;
+
+  /**
+   * @public
+   * @property
+   */
+  public realId: number;
 
   /**
    * @public
@@ -37,13 +43,6 @@ export class TagBadgeComponent implements OnInit {
    */
   @ViewChild('tag', {read: ViewContainerRef})
   private tag: ViewContainerRef;
-
-  constructor(
-  ) {
-  }
-
-  ngOnInit(): void {
-  }
 
   /**
    * Handle Input Focus Out

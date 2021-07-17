@@ -100,10 +100,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
   /**
    * @public
    * @param item
+   * @param type
    * @returns string
    */
-  public getEndpoint(item: string): string {
-    return `${environment.app.imageEndpoint}/${item}`;
+  public getEndpoint(item: string, type: string): string {
+    return `${environment.app.imageEndpoint}/${item}.${type.split('/')[1]}`;
   }
 
   /**

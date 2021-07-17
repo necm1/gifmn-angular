@@ -2,52 +2,41 @@ import {
   AfterViewInit, ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
-  ComponentRef,
-  OnDestroy,
+  ComponentRef, OnDestroy,
   OnInit,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {APIService} from '../../_service/api.service';
-import {UploadContainerComponent} from '../../layout/component/upload-container/upload-container.component';
-import {Observable, Subscription} from 'rxjs';
-import {AlertService} from '../../_service/alert.service';
-import {TranslateService} from '@ngx-translate/core';
-import {TagBadgeComponent} from '../../layout/component/tag-badge/tag-badge.component';
-import {Post} from '../../_model/post/post.entity';
-import {APIResponse} from '../../_model/api/api-response.model';
-import {UserService} from '../../_service/user.service';
+import {UploadComponent} from '../upload.component';
 import {ActivatedRoute} from '@angular/router';
-import {PostCategory} from '../../_model/post/post-category.entity';
-import {TitleService} from '../../_service/title.service';
-
-interface Attachment {
-  name: string;
-  description: string;
-  type: string;
-}
-
-interface Tag {
-  name: string;
-}
-
-interface RequestPost {
-  category: number;
-  user: string;
-  title: string;
-  description: string;
-}
+import {PostCategory} from '../../../_model/post/post-category.entity';
+import {TitleService} from '../../../_service/title.service';
+import {TranslateService} from '@ngx-translate/core';
+import {Post} from '../../../_model/post/post.entity';
+import {UploadContainerComponent} from '../../../layout/component/upload-container/upload-container.component';
+import {TagBadgeComponent} from '../../../layout/component/tag-badge/tag-badge.component';
+import {Subscription} from 'rxjs';
+import {AlertService} from '../../../_service/alert.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {environment} from '../../../../environment';
+import {AttachmentService} from '../../../_service/attachment.service';
 
 @Component({
-  selector: 'app-upload',
-  templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss']
 })
 /**
- * @class UploadComponent
- * @implements {OnInit, OnDestroy}
+ * @class EditComponent
+ * @implements OnInit
  */
-export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
+export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
+  /**
+   * @public
+   * @property
+   */
+  public categories: PostCategory[];
+
   /**
    * @public
    * @property
@@ -64,13 +53,13 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
    * @public
    * @property
    */
-  public categorySelect: HTMLSelectElement;
+  public post: Post;
 
   /**
    * @public
    * @property
    */
-  public categories: PostCategory[] = [];
+  public categorySelect: number;
 
   /**
    * @private
@@ -96,6 +85,12 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
    * @private
    * @property
    */
+  private readonly itemDeleteSubscriptionMap: Map<ComponentRef<UploadContainerComponent | TagBadgeComponent>, Subscription>;
+
+  /**
+   * @private
+   * @property
+   */
   private readonly itemValueMap: Map<number, { url: string; file: File; description: string }>;
 
   /**
@@ -105,29 +100,30 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly tagsMap: Map<number, string>;
 
   /**
-   * UploadComponent Constructor
+   * EditComponent Constructor
    *
    * @constructor
-   * @param apiService
+   * @param route
+   * @param titleService
+   * @param translate
    * @param factoryResolver
    * @param alertService
    * @param cdr
-   * @param translate
-   * @param userService
-   * @param route
-   * @param titleService
+   * @param sanitizer
+   * @param attachmentService
    */
   constructor(
-    private apiService: APIService,
+    private route: ActivatedRoute,
+    private titleService: TitleService,
+    private translate: TranslateService,
     private factoryResolver: ComponentFactoryResolver,
     private alertService: AlertService,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService,
-    private userService: UserService,
-    private route: ActivatedRoute,
-    private titleService: TitleService
+    private sanitizer: DomSanitizer,
+    private attachmentService: AttachmentService
   ) {
     this.itemSubscriptionMap = new Map<ComponentRef<UploadContainerComponent>, Subscription>();
+    this.itemDeleteSubscriptionMap = new Map<ComponentRef<UploadContainerComponent>, Subscription>();
     this.itemValueMap = new Map<number, { url: string; file: File; description: string }>();
     this.tagsMap = new Map<number, string>();
   }
@@ -136,34 +132,65 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
    * @public
    */
   public ngOnInit(): void {
-    this.categories = this.route.snapshot.data['categories'] ?? [];
+    this.categories = this.route.snapshot.data.categories ?? [];
+    this.post = this.route.snapshot.data.post;
+    this.categorySelect = this.post.category.id;
 
     document.getElementsByTagName('app-header')[0].classList.remove('d-flex');
     document.getElementsByTagName('app-header')[0].classList.add('d-none');
     document.body.classList.add('upload-page');
-    this.titleService.set(this.translate.instant('upload.title'));
+    this.titleService.set(this.translate.instant('upload.edit.title', {
+      title: this.post.title
+    }));
   }
 
   /**
    * @public
    */
   public ngAfterViewInit(): void {
-    // add one container
-    this.onAddContainerClick();
+    this.post?.attachments.forEach(value => {
+      this.onAddContainerClick({
+        url: value.url,
+        type: value.type
+      }, value.description);
+    });
+
+    this.post?.tags?.forEach(value => {
+      this.addTag(value);
+    });
+
     this.cdr.detectChanges();
   }
-
 
   /**
    * Handle Container Click
    *
    * @public
+   * @param image
+   * @param description
    */
-  public onAddContainerClick(): void {
+  public onAddContainerClick(image?: {url: string; type: string}, description?: string): void {
     const factory = this.factoryResolver.resolveComponentFactory(UploadContainerComponent);
     const component = this.container.createComponent(factory);
 
     component.instance.id = this.itemSubscriptionMap.size + 1;
+
+    if (image) {
+      component.instance.image = {
+        file: {
+          type: image.type
+        },
+        url: image.url
+      } as any;
+
+      component.instance.exists = true;
+
+      this.itemValueMap.set(component.instance.id, component.instance.image as any);
+    }
+
+    if (description) {
+      component.instance.description = description;
+    }
 
     this.itemSubscriptionMap.set(
       component,
@@ -176,6 +203,33 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
         this.itemValueMap.set(component.instance.id, value);
       }, err => this.alertService.error(err))
     );
+
+    this.itemDeleteSubscriptionMap.set(component, component.instance.itemDeleteEvent.subscribe(value => {
+      // Replace Item
+      if (!this.itemValueMap.get(component.instance.id)) {
+        return;
+      }
+
+      if (value.exists) {
+        const subscription = this.attachmentService.delete(value.url).subscribe({
+          next: res => {
+            if (!res) {
+              return;
+            }
+
+            this.itemValueMap.delete(component.instance.id);
+            component.destroy();
+            this.alertService.success(this.translate.instant('upload.edit.delete', {value: value.url}));
+          },
+          error: err => this.alertService.error(err),
+          complete: () => subscription.unsubscribe()
+        });
+      }
+    }));
+  }
+
+  public onSave() {
+
   }
 
   /**
@@ -183,10 +237,15 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
    *
    * @public
    */
-  public addTag(): void {
+  public addTag(tag?: {id: number, name: string}): void {
     const factory = this.factoryResolver.resolveComponentFactory(TagBadgeComponent);
     const component = this.tagContainer.createComponent(factory, 0);
     const elementRef = component.location.nativeElement;
+
+    if (tag) {
+      component.instance.realId = tag.id;
+      component.instance.text = tag.name;
+    }
 
     component.instance.id = this.tagsMap.size + 1;
     elementRef.classList.add('badge');
@@ -212,70 +271,6 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * @public
    */
-  public onSave(): void {
-    if (!this.categorySelect) {
-      this.alertService.error(this.translate.instant('upload.error.category'));
-      return;
-    }
-
-    if (!this.title) {
-      this.alertService.error(this.translate.instant('upload.error.title'));
-      return;
-    }
-
-    if (!this.itemValueMap || this.itemValueMap.size === 0) {
-      this.alertService.error(this.translate.instant('upload.error.image'));
-      return;
-    }
-
-    const form = new FormData();
-    const attachments: Attachment[] = [];
-    const tags: Tag[] = [];
-    const post: RequestPost = {
-      category: Number(this.categorySelect),
-      user: this.userService.user.username,
-      title: this.title,
-      description: this.description
-    };
-
-    form.append('post', JSON.stringify(post));
-
-    // Append Images
-    this.itemValueMap.forEach(value => {
-      // Append File
-      form.append('images', value.file, value.file.name);
-
-      // Add Image Description
-      attachments.push({
-        name: value.file.name,
-        description: value.description,
-        type: value.file.type
-      });
-    });
-
-    if (this.tagsMap?.size > 0) {
-      // Append Tags
-      this.tagsMap.forEach(value => {
-        // Add Tag
-        tags.push({
-          name: value,
-        });
-      });
-    }
-
-    form.append('attachments', JSON.stringify(attachments));
-    form.append('tags', JSON.stringify(tags));
-
-    const subscription = (this.apiService.post<Post>('post', form) as Observable<APIResponse<Post>>).subscribe({
-      next: value => console.log(value),
-      error: err => this.alertService.error(err),
-      complete: () => subscription.unsubscribe()
-    });
-  }
-
-  /**
-   * @public
-   */
   public ngOnDestroy(): void {
     document.getElementsByTagName('app-header')[0].classList.remove('d-none');
     document.getElementsByTagName('app-header')[0].classList.add('d-flex');
@@ -284,6 +279,11 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.itemSubscriptionMap && this.itemSubscriptionMap.size > 0) {
       // Unsubscribe
       this.itemSubscriptionMap.forEach(value => value.unsubscribe());
+    }
+
+    if (this.itemDeleteSubscriptionMap && this.itemDeleteSubscriptionMap.size > 0) {
+      // Unsubscribe
+      this.itemDeleteSubscriptionMap.forEach(value => value.unsubscribe());
     }
   }
 
@@ -301,5 +301,13 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Remove from Map
     this.tagsMap.delete(component.instance.id);
+  }
+
+  /**
+   * @public
+   * @returns string
+   */
+  public get postDescription(): string {
+    return this.post.description ?? this.translate.instant('upload.add.description');
   }
 }

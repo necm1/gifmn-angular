@@ -11,5 +11,9 @@ export interface Post {
   attachments: PostAttachment[];
   tags: PostTag[];
   created_at: Date;
+  category: {
+    id: number;
+    name: string;
+  };
 }
 

@@ -1,5 +1,6 @@
-import {Component, Output, EventEmitter, HostListener, SecurityContext} from '@angular/core';
+import {Component, EventEmitter, HostListener, Output, SecurityContext} from '@angular/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {environment} from '../../../../environment';
 
 export interface FileHandle {
   file: File;
@@ -12,7 +13,14 @@ export interface FileHandle {
   styleUrls: ['./upload-container.component.scss']
 })
 export class UploadContainerComponent {
-  @Output() itemSavedEvent = new EventEmitter<{ image: string; file: File; description: string }>();
+  @Output() public itemSavedEvent = new EventEmitter<{ image: string; file: File; description: string }>();
+
+  @Output() public itemDeleteEvent = new EventEmitter<{url: string; exists: boolean}>();
+
+  /**
+   * @public
+   */
+  public exists = false;
 
   /**
    * @public
@@ -58,7 +66,7 @@ export class UploadContainerComponent {
 
   @HostListener('focusout')
   public onFocusOut(): void {
-    if (!this.image || !this.image.file || !this.image.url) {
+    if (!this.image || !this.image.file || !this.image.url || !this.image.file.type) {
       return;
     }
 
@@ -99,6 +107,30 @@ export class UploadContainerComponent {
     if (file) {
       this.image = file;
     }
+  }
+
+  /**
+   * @public
+   */
+  public deleteAttachment(): void {
+    if (!this.image?.url) {
+      return;
+    }
+
+    this.itemDeleteEvent.emit({
+      url: this.sanitizer.sanitize(SecurityContext.URL, this.image.url),
+      exists: this.exists
+    });
+  }
+
+  /**
+   * @public
+   * @param item
+   * @param type
+   * @returns string
+   */
+  public getEndpoint(item: SafeUrl, type: string): string {
+    return `${this.sanitizer.sanitize(SecurityContext.URL, `${environment.app.imageEndpoint}/${item}`)}.${type.split('/')[1]}`;
   }
 
   /**

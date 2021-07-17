@@ -3,7 +3,7 @@
  */
 export interface PostAttachment {
   id: number;
-  type: 'image' | 'video';
+  type: string;
   url: string;
   description: string;
   created_at: Date;

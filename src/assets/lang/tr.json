@@ -33,6 +33,8 @@
     "update": "Tag \"{{ title }}\" wurde geändert in \"{{ new }}\""
   },
 
+  "edit": "Bearbeiten",
+
   "upload": {
     "title": "Bild / Video hochladen",
     "add": {
@@ -41,6 +43,10 @@
       "tag": "Tag hinzufügen",
       "description": "Beschreibung hinzufügen",
       "category": "Kategorie auswählen"
+    },
+    "edit": {
+      "title": "{{title}} Bearbeiten",
+      "delete": "{{value}} wurde gelöscht"
     },
     "preview": {
       "drop": "Bild hier ablassen",

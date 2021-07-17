@@ -5,11 +5,13 @@ import {UploadRoutingModule} from './upload-routing.module';
 import {UploadComponent} from './component/upload.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule} from '@angular/forms';
+import { EditComponent } from './component/edit/edit.component';
 
 
 @NgModule({
   declarations: [
-    UploadComponent
+    UploadComponent,
+    EditComponent
   ],
   imports: [
     CommonModule,

@@ -3,6 +3,33 @@
     <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12">
       <div class="d-flex flex-row align-items-center">
         <div class="flex-grow-1 gallery-title">{{post.title}}</div>
+        <a
+          [routerLink]="['/upload', post.attachments[0].url, 'edit']"
+          *ngIf="isAuthenticated"
+          class="badge bg-dark text-decoration-none"
+          [translate]="'edit' | translate"></a>
+      </div>
+
+      <div class="gallery-description">{{post.description}}</div>
+
+      <ng-container *ngFor="let item of post.attachments">
+        <div class="gallery-media">
+          <img *ngIf="item.type.startsWith('image')" class="img-fluid image-placeholder"
+               [src]="getEndpoint(item.url, item.type)"/>
+          <img *ngIf="item.type.startsWith('image')" class="img-fluid" [src]="getEndpoint(item.url, item.type)"
+               loading="lazy"/>
+
+          <video *ngIf="item.type.startsWith('video')" playsinline="true" autoplay="true" class="img-fluid video" controls>
+            <source type="video/mp4" [src]="getEndpoint(item.url, item.type)">
+          </video>
+        </div>
+
+        <div class="gallery-description" *ngIf="item.description">{{item.description}}</div>
+      </ng-container>
+    </div>
+
+    <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12">
+      <div class="d-flex flex-wrap">
         <ng-container *ngIf="post.tags">
           <ul class="list-unstyled gallery-tags mb-0">
             <li *ngFor="let tag of post.tags">
@@ -21,27 +48,6 @@
           </ul>
         </ng-container>
       </div>
-
-      <div class="gallery-description">{{post.description}}</div>
-
-      <ng-container *ngFor="let item of post.attachments">
-        <div class="gallery-media">
-          <img *ngIf="item.type === 'IMAGE'" class="img-fluid image-placeholder"
-               [src]="getEndpoint(item.url + '.jpeg')"/>
-          <img *ngIf="item.type === 'IMAGE'" class="img-fluid" [src]="getEndpoint(item.url + '.jpeg')"
-               loading="lazy"/>
-
-          <video *ngIf="item.type === 'VIDEO'" playsinline="true" autoplay="true" class="video">
-            <source type="video/mp4" [src]="getEndpoint(item.url + '.mp4')">
-          </video>
-        </div>
-
-        <div class="gallery-description" *ngIf="item.description">{{item.description}}</div>
-      </ng-container>
-    </div>
-
-    <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12">
-      asdasdas
     </div>
   </div>
 </div>
