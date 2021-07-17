@@ -21,17 +21,17 @@ import {ActivatedRoute} from '@angular/router';
 import {PostCategory} from '../../_model/post/post-category.entity';
 import {TitleService} from '../../_service/title.service';
 
-interface Attachment {
+export interface Attachment {
   name: string;
   description: string;
   type: string;
 }
 
-interface Tag {
+export interface Tag {
   name: string;
 }
 
-interface RequestPost {
+export interface RequestPost {
   category: number;
   user: string;
   title: string;

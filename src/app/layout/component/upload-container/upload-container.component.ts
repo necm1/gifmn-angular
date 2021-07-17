@@ -13,7 +13,7 @@ export interface FileHandle {
   styleUrls: ['./upload-container.component.scss']
 })
 export class UploadContainerComponent {
-  @Output() public itemSavedEvent = new EventEmitter<{ image: string; file: File; description: string }>();
+  @Output() public itemSavedEvent = new EventEmitter<{ image: string; file?: File; realId?: number; description: string }>();
 
   @Output() public itemDeleteEvent = new EventEmitter<{url: string; exists: boolean}>();
 
@@ -27,6 +27,8 @@ export class UploadContainerComponent {
    * @property
    */
   public id: number;
+
+  public realId: number;
 
   /**
    * @public
@@ -67,6 +69,15 @@ export class UploadContainerComponent {
   @HostListener('focusout')
   public onFocusOut(): void {
     if (!this.image || !this.image.file || !this.image.url || !this.image.file.type) {
+      return;
+    }
+
+    if (this.exists && this.realId) {
+      this.itemSavedEvent.emit({
+        description: this.description,
+        realId: this.realId,
+        image: this.sanitizer.sanitize(SecurityContext.URL, this.image.url)
+      });
       return;
     }
 
@@ -130,7 +141,7 @@ export class UploadContainerComponent {
    * @returns string
    */
   public getEndpoint(item: SafeUrl, type: string): string {
-    return `${this.sanitizer.sanitize(SecurityContext.URL, `${environment.app.imageEndpoint}/${item}`)}.${type.split('/')[1]}`;
+    return `${environment.app.imageEndpoint}/${item}.${type.split('/')[1]}`;
   }
 
   /**

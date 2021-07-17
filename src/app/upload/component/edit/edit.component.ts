@@ -7,7 +7,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {UploadComponent} from '../upload.component';
+import {Attachment, RequestPost, Tag, UploadComponent} from '../upload.component';
 import {ActivatedRoute} from '@angular/router';
 import {PostCategory} from '../../../_model/post/post-category.entity';
 import {TitleService} from '../../../_service/title.service';
@@ -15,11 +15,16 @@ import {TranslateService} from '@ngx-translate/core';
 import {Post} from '../../../_model/post/post.entity';
 import {UploadContainerComponent} from '../../../layout/component/upload-container/upload-container.component';
 import {TagBadgeComponent} from '../../../layout/component/tag-badge/tag-badge.component';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {AlertService} from '../../../_service/alert.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {environment} from '../../../../environment';
 import {AttachmentService} from '../../../_service/attachment.service';
+import {PostService} from '../../../_service/post.service';
+import {APIResponse} from '../../../_model/api/api-response.model';
+import {PostTag} from '../../../_model/post/post-tag.entity';
+import {PostAttachment} from '../../../_model/post/post-attachment.entity';
+import {UserService} from '../../../_service/user.service';
 
 @Component({
   selector: 'app-edit',
@@ -91,7 +96,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
    * @private
    * @property
    */
-  private readonly itemValueMap: Map<number, { url: string; file: File; description: string }>;
+  private readonly itemValueMap: Map<number, { url: string; file: File; description: string; realId?: number }>;
 
   /**
    * @private
@@ -111,6 +116,8 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param cdr
    * @param sanitizer
    * @param attachmentService
+   * @param postService
+   * @param userService
    */
   constructor(
     private route: ActivatedRoute,
@@ -120,7 +127,9 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
     private alertService: AlertService,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
-    private attachmentService: AttachmentService
+    private attachmentService: AttachmentService,
+    private postService: PostService,
+    private userService: UserService
   ) {
     this.itemSubscriptionMap = new Map<ComponentRef<UploadContainerComponent>, Subscription>();
     this.itemDeleteSubscriptionMap = new Map<ComponentRef<UploadContainerComponent>, Subscription>();
@@ -135,6 +144,8 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
     this.categories = this.route.snapshot.data.categories ?? [];
     this.post = this.route.snapshot.data.post;
     this.categorySelect = this.post.category.id;
+    this.title = this.post.title;
+    this.description = this.post.description;
 
     document.getElementsByTagName('app-header')[0].classList.remove('d-flex');
     document.getElementsByTagName('app-header')[0].classList.add('d-none');
@@ -152,11 +163,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
       this.onAddContainerClick({
         url: value.url,
         type: value.type
-      }, value.description);
-    });
-
-    this.post?.tags?.forEach(value => {
-      this.addTag(value);
+      }, value.description, value.id);
     });
 
     this.cdr.detectChanges();
@@ -168,22 +175,24 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
    * @public
    * @param image
    * @param description
+   * @param id
    */
-  public onAddContainerClick(image?: {url: string; type: string}, description?: string): void {
+  public onAddContainerClick(image?: {url: string; type: string}, description?: string, id?: number): void {
     const factory = this.factoryResolver.resolveComponentFactory(UploadContainerComponent);
     const component = this.container.createComponent(factory);
 
     component.instance.id = this.itemSubscriptionMap.size + 1;
 
     if (image) {
+      component.instance.exists = true;
+      component.instance.realId = id;
+
       component.instance.image = {
         file: {
           type: image.type
         },
-        url: image.url
+        url: image.url,
       } as any;
-
-      component.instance.exists = true;
 
       this.itemValueMap.set(component.instance.id, component.instance.image as any);
     }
@@ -228,7 +237,91 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
     }));
   }
 
-  public onSave() {
+  /**
+   * Handle Post Save
+   *
+   * @public
+   */
+  public onSave(): void {
+    if (!this.categorySelect) {
+      this.alertService.error(this.translate.instant('upload.error.category'));
+      return;
+    }
+
+    if (!this.title) {
+      this.alertService.error(this.translate.instant('upload.error.title'));
+      return;
+    }
+
+    if (!this.itemValueMap || this.itemValueMap.size === 0) {
+      this.alertService.error(this.translate.instant('upload.error.image'));
+      return;
+    }
+
+    const form = new FormData();
+    const attachments: {id: number; url: string; description: string}[] = [];
+    const tags: Tag[] = [];
+    const post = {
+      id: this.post.id,
+      category: Number(this.categorySelect),
+      user: this.userService.user?.username,
+      title: this.title,
+      description: this.description
+    };
+
+    form.append('post', JSON.stringify(post));
+
+    const newAttachments: Attachment[] = [];
+
+    // Append Images
+    this.itemValueMap.forEach((value: {description: string; url: string; file?: any; realId?: number}) => {
+      if (value.file && value.file.name) {
+        // Append File
+        form.append('images', value.file, value.file.name);
+
+        newAttachments.push({
+          name: value.file.name,
+          description: value.description,
+          type: value.file.type
+        });
+      }
+
+      if ('realId' in value) {
+        attachments.push({
+          id: (value as any).realId,
+          url: value.url,
+          description: (value as any).description
+        });
+        return;
+      }
+    });
+
+    if (this.tagsMap?.size > 0) {
+      // Append Tags
+      this.tagsMap.forEach(value => {
+        // Add Tag
+        tags.push({
+          name: value,
+        });
+      });
+    }
+
+    form.append('attachments', JSON.stringify(attachments.concat(newAttachments as any)));
+    form.append('tags', JSON.stringify(tags));
+
+    const subscription = this.postService.update(post.id, form).subscribe({
+      next: value => console.log(value),
+      error: err => this.alertService.error(err),
+      complete: () => subscription.unsubscribe()
+    });
+  }
+
+  /**
+   * Handle Post Delete
+   *
+   * @public
+   */
+  public onDelete(): void {
 
   }
 

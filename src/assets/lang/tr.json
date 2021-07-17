@@ -49,15 +49,16 @@
       "delete": "{{value}} wurde gelöscht"
     },
     "preview": {
-      "drop": "Bild hier ablassen",
-      "description": "Beschreibe das Bild"
+      "drop": "Bild / Video hier ablassen",
+      "description": "Beschreibe das Bild / Video"
     },
     "error": {
       "title": "Gebe einen Titel ein",
       "category": "Bitte wähle eine Kategorie aus!",
       "image": "Du musst mindestens 1 Bild hochladen"
     },
-    "save": "Speichern"
+    "save": "Speichern",
+    "delete": "Löschen"
   },
 
   "scroll": "Scroll to Top",

@@ -31,10 +31,12 @@
         <div class="d-inline-flex flex-wrap">
           <ul class="list-unstyled">
             <ng-template #tagsContainer></ng-template>
+            <li *ngFor="let tag of post.tags" class="badge rounded-5 bg-success me-2">{{tag.name}}</li>
             <li class="badge rounded-5 bg-dark c-pointer" (click)="addTag()" [translate]="'upload.add.tag'"></li>
           </ul>
         </div>
-        <button type="button" class="btn btn-success rounded-3" (click)="onSave()" [translate]="'upload.save'"></button>
+        <button type="button" class="btn btn-success rounded-3 mb-2" (click)="onSave()" [translate]="'upload.save'"></button>
+        <button type="button" class="btn btn-danger rounded-3" (click)="onDelete()" [translate]="'upload.delete'"></button>
       </div>
     </div>
   </div>
