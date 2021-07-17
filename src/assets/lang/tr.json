@@ -46,7 +46,12 @@
     },
     "edit": {
       "title": "{{title}} Bearbeiten",
-      "delete": "{{value}} wurde gelöscht"
+      "delete": "{{value}} wurde gelöscht",
+      "success": "{{value}} wurde erfolgreich bearbeitet. Bitte warte einige Minuten, bis die Änderung aktiv wird",
+      "deleteState": {
+        "success": "Wurde erfolgreich gelöscht!",
+        "failed": "Ein unbekannter Fehler ist aufgetreten!"
+      }
     },
     "preview": {
       "drop": "Bild / Video hier ablassen",

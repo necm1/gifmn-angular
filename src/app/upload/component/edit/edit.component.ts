@@ -8,7 +8,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {Attachment, RequestPost, Tag, UploadComponent} from '../upload.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PostCategory} from '../../../_model/post/post-category.entity';
 import {TitleService} from '../../../_service/title.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -118,6 +118,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param attachmentService
    * @param postService
    * @param userService
+   * @param router
    */
   constructor(
     private route: ActivatedRoute,
@@ -129,7 +130,8 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private attachmentService: AttachmentService,
     private postService: PostService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.itemSubscriptionMap = new Map<ComponentRef<UploadContainerComponent>, Subscription>();
     this.itemDeleteSubscriptionMap = new Map<ComponentRef<UploadContainerComponent>, Subscription>();
@@ -177,7 +179,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param description
    * @param id
    */
-  public onAddContainerClick(image?: {url: string; type: string}, description?: string, id?: number): void {
+  public onAddContainerClick(image?: { url: string; type: string }, description?: string, id?: number): void {
     const factory = this.factoryResolver.resolveComponentFactory(UploadContainerComponent);
     const component = this.container.createComponent(factory);
 
@@ -259,7 +261,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     const form = new FormData();
-    const attachments: {id: number; url: string; description: string}[] = [];
+    const attachments: { id: number; url: string; description: string }[] = [];
     const tags: Tag[] = [];
     const post = {
       id: this.post.id,
@@ -274,7 +276,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
     const newAttachments: Attachment[] = [];
 
     // Append Images
-    this.itemValueMap.forEach((value: {description: string; url: string; file?: any; realId?: number}) => {
+    this.itemValueMap.forEach((value: { description: string; url: string; file?: any; realId?: number }) => {
       if (value.file && value.file.name) {
         // Append File
         form.append('images', value.file, value.file.name);
@@ -310,7 +312,8 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
     form.append('tags', JSON.stringify(tags));
 
     const subscription = this.postService.update(post.id, form).subscribe({
-      next: value => console.log(value),
+      next: value => this.router.navigateByUrl(`/gallery/${value.attachments[0].url}`).then(() =>
+        this.alertService.success(this.translate.instant('upload.edit.success', {value: post.title}))),
       error: err => this.alertService.error(err),
       complete: () => subscription.unsubscribe()
     });
@@ -322,7 +325,20 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
    * @public
    */
   public onDelete(): void {
+    const subscription = this.postService.delete(this.post.id).subscribe({
+      next: value => {
+        if (value) {
+          this.router.navigateByUrl('/').then(() =>
+            this.alertService.success(this.translate.instant('upload.edit.deleteState.success')));
 
+          return;
+        }
+
+        this.alertService.error('upload.edit.deleteState.failed');
+      },
+      error: err => this.alertService.error(err),
+      complete: () => subscription.unsubscribe()
+    });
   }
 
   /**
@@ -330,7 +346,7 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
    *
    * @public
    */
-  public addTag(tag?: {id: number, name: string}): void {
+  public addTag(tag?: { id: number, name: string }): void {
     const factory = this.factoryResolver.resolveComponentFactory(TagBadgeComponent);
     const component = this.tagContainer.createComponent(factory, 0);
     const elementRef = component.location.nativeElement;

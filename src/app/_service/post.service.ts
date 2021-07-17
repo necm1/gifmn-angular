@@ -35,8 +35,21 @@ export class PostService {
    * @param body
    * @returns Observable<boolean>
    */
-  public update(id: number, body: FormData): Observable<boolean> {
-    return (this.apiService.put<boolean>('post/' + id, body) as Observable<APIResponse<boolean>>).pipe(
+  public update(id: number, body: FormData): Observable<Post> {
+    return (this.apiService.put<Post>('post/' + id, body) as Observable<APIResponse<Post>>).pipe(
+      map(value => value.data)
+    );
+  }
+
+  /**
+   * Delete Post
+   *
+   * @public
+   * @param id
+   * @returns Observable<boolean>
+   */
+  public delete(id: number): Observable<boolean> {
+    return this.apiService.del<boolean>(`post/${id}`).pipe(
       map(value => value.data)
     );
   }
