@@ -92,6 +92,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
       // Set first item
       this.activeDropdownItem = this.categoryService.category;
     }
+
+    for (let i = this.items.length; i < 35; i++) {
+      this.items.push({
+        description: '',
+        title: ''
+      } as any);
+    }
   }
 
   /**
@@ -128,6 +135,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
       next: response => {
         this.itemsList = response;
         this.items = response.items ?? [];
+
+        for (let i = this.items.length; i < 35; i++) {
+          this.items.push({
+            description: '',
+            title: ''
+          } as any);
+        }
+      },
+      error: () => {
+        for (let i = this.items.length; i < 35; i++) {
+          this.items.push({
+            description: '',
+            title: ''
+          } as any);
+        }
       },
       complete: () => subscription.unsubscribe()
     });

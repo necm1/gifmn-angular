@@ -1,3 +1,24 @@
 .c-pointer {
   cursor: pointer !important;
 }
+
+.placeholder-shimmer {
+  animation-duration: 10s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: linear-gradient(to right, #807c7c 8%, #716a6a 18%, #807c7c 33%);
+  height: 100%;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -30vw 0
+  }
+  100% {
+    background-position: 70vw 0
+  }
+}

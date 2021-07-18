@@ -4,8 +4,7 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-logout',
-  templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.scss']
+  template: ''
 })
 /**
  * @class LogoutComponent
@@ -36,6 +35,7 @@ export class LogoutComponent implements OnInit {
     }
 
     this.authService.clearToken();
+    this.router.navigateByUrl('/');
   }
 
 }

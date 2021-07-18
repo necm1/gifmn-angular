@@ -9,8 +9,9 @@ import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 import {TagEditModalComponent} from './component/tag-edit-modal/tag-edit-modal.component';
 import {FormsModule} from '@angular/forms';
-import { UploadContainerComponent } from './component/upload-container/upload-container.component';
-import { TagBadgeComponent } from './component/tag-badge/tag-badge.component';
+import {UploadContainerComponent} from './component/upload-container/upload-container.component';
+import {TagBadgeComponent} from './component/tag-badge/tag-badge.component';
+import {ImageCardPlaceholderComponent} from './component/image-card-placeholder/image-card-placeholder.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TagBadgeComponent } from './component/tag-badge/tag-badge.component';
     FooterComponent,
     TagEditModalComponent,
     UploadContainerComponent,
-    TagBadgeComponent
+    TagBadgeComponent,
+    ImageCardPlaceholderComponent
   ],
   exports: [
     HeaderComponent,
@@ -30,7 +32,8 @@ import { TagBadgeComponent } from './component/tag-badge/tag-badge.component';
     FooterComponent,
     TagEditModalComponent,
     UploadContainerComponent,
-    TagBadgeComponent
+    TagBadgeComponent,
+    ImageCardPlaceholderComponent
   ],
   imports: [
     CommonModule,
