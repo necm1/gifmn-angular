@@ -33,6 +33,36 @@
     "update": "Tag \"{{ title }}\" wurde geändert in \"{{ new }}\""
   },
 
+  "category": {
+    "modal": {
+      "title": "Kategorien Verwalten",
+      "body": {
+        "select": "Bitte wähle eine Kategorie aus",
+        "label": "Name",
+        "create": "Neue Kategorie erstellen"
+      },
+      "footer": {
+        "delete": "\"{{name}}\" löschen",
+        "save": "\"{{name}}\" speichern",
+        "create": "\"{{name}}\" erstellen"
+      }
+    },
+
+    "delete": {
+      "success": "{{ name }} wurde erfolgreich gelöscht",
+      "fail": "{{ name }} konnte nicht gelöscht werden"
+    },
+
+    "update": {
+      "success": "{{ name }} wurde erfolgreich geändert",
+      "fail": "{{ name }} konnte nicht geändert werden"
+    },
+
+    "create": {
+      "name": "Bitte gebe einen Namen ein"
+    }
+  },
+
   "edit": "Bearbeiten",
 
   "upload": {
@@ -73,6 +103,7 @@
     "welcome": "Willkommen {{ username }}",
     "login": "Anmelden",
     "logout": "Abmelden",
-    "upload": "Hochladen"
+    "upload": "Hochladen",
+    "category": "Kategorien Verwalten"
   }
 }

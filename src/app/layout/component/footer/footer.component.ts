@@ -4,6 +4,9 @@ import {AuthService} from '../../../auth/service/auth.service';
 import {User} from '../../../_model/user/user.model';
 import {UserService} from '../../../_service/user.service';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {CategoryManagementModalComponent} from '../category-management-modal/category-management-modal.component';
+import {CategoryService} from '../../../_service/category.service';
 
 @Component({
   selector: 'app-footer',
@@ -51,15 +54,25 @@ export class FooterComponent implements OnInit, OnDestroy {
   private currentSubject: BehaviorSubject<boolean>;
 
   /**
+   * @private
+   * @property
+   */
+  private bsModalRef: BsModalRef;
+
+  /**
    * FooterComponent Constructor
    *
    * @constructor
    * @param authService
    * @param userService
+   * @param modalService
+   * @param categoryService
    */
   constructor(
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private modalService: BsModalService,
+    private categoryService: CategoryService
   ) {
   }
 
@@ -79,6 +92,21 @@ export class FooterComponent implements OnInit, OnDestroy {
         const target = document.body;
         this.state = target.scrollTop > 10;
       }
+    });
+  }
+
+  /**
+   * Open Category Modal
+   *
+   * @public
+   */
+  public openCategoryModal(): void {
+    const subscription: Subscription = this.categoryService.categories().subscribe({
+      next: value => {
+        this.bsModalRef = this.modalService.show(CategoryManagementModalComponent, {categories: value} as  any);
+        this.bsModalRef.content.closeBtnName = 'Close';
+      },
+      complete: () => subscription.unsubscribe()
     });
   }
 

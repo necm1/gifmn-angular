@@ -9,11 +9,21 @@ import {ActivatedRoute} from '@angular/router';
 import {CategoryService} from '../../_service/category.service';
 import {Observable, Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [
+    trigger('fade', [
+      state('0', style({ opacity: 1, display: 'block' })),
+      state('1', style({ opacity: 0, display: 'none' })),
+
+      transition('1 => 0', animate('450ms')),
+      transition('0 => 1', animate('450ms')),
+    ])
+  ]
 })
 /**
  * @class HomeComponent
@@ -24,7 +34,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @public
    * @property
    */
-  @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
+  @ViewChild(NgxMasonryComponent)
+  public masonry: NgxMasonryComponent;
 
   /**
    * @public
@@ -99,6 +110,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
         title: ''
       } as any);
     }
+  }
+
+  public onScroll() {
+    console.log('scrolling hbaibi');
   }
 
   /**

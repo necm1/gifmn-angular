@@ -235,7 +235,13 @@ export class EditComponent implements OnInit, AfterViewInit, OnDestroy {
           error: err => this.alertService.error(err),
           complete: () => subscription.unsubscribe()
         });
+
+        return;
       }
+
+      this.itemValueMap.delete(component.instance.id);
+      component.destroy();
+      this.alertService.success(this.translate.instant('upload.edit.delete', {value: value.url}));
     }));
   }
 

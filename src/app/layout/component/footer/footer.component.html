@@ -13,5 +13,8 @@
     <li *ngIf="!isAuthenticated">
       <a routerLink="/auth" [translate]="'footer.login'"></a>
     </li>
+    <li *ngIf="isAuthenticated">
+      <a class="c-pointer" (click)="openCategoryModal()" [translate]="'footer.category'"></a>
+    </li>
   </ul>
 </div>

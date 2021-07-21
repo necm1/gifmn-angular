@@ -96,6 +96,12 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
    * @private
    * @property
    */
+  private readonly itemDeleteSubscriptionMap: Map<ComponentRef<UploadContainerComponent | TagBadgeComponent>, Subscription>;
+
+  /**
+   * @private
+   * @property
+   */
   private readonly itemValueMap: Map<number, { url: string; file: File; description: string }>;
 
   /**
@@ -128,6 +134,7 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
     private titleService: TitleService
   ) {
     this.itemSubscriptionMap = new Map<ComponentRef<UploadContainerComponent>, Subscription>();
+    this.itemDeleteSubscriptionMap = new Map<ComponentRef<UploadContainerComponent>, Subscription>();
     this.itemValueMap = new Map<number, { url: string; file: File; description: string }>();
     this.tagsMap = new Map<number, string>();
   }
@@ -176,6 +183,17 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
         this.itemValueMap.set(component.instance.id, value);
       }, err => this.alertService.error(err))
     );
+
+    this.itemDeleteSubscriptionMap.set(component, component.instance.itemDeleteEvent.subscribe(value => {
+      // Replace Item
+      if (!this.itemValueMap.get(component.instance.id)) {
+        return;
+      }
+
+      this.itemValueMap.delete(component.instance.id);
+      component.destroy();
+      this.alertService.success(this.translate.instant('upload.edit.delete', {value: ''}));
+    }));
   }
 
   /**
@@ -284,6 +302,11 @@ export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.itemSubscriptionMap && this.itemSubscriptionMap.size > 0) {
       // Unsubscribe
       this.itemSubscriptionMap.forEach(value => value.unsubscribe());
+    }
+
+    if (this.itemDeleteSubscriptionMap && this.itemDeleteSubscriptionMap.size > 0) {
+      // Unsubscribe
+      this.itemDeleteSubscriptionMap.forEach(value => value.unsubscribe());
     }
   }
 

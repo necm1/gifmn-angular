@@ -12,6 +12,8 @@ import {FormsModule} from '@angular/forms';
 import {UploadContainerComponent} from './component/upload-container/upload-container.component';
 import {TagBadgeComponent} from './component/tag-badge/tag-badge.component';
 import {ImageCardPlaceholderComponent} from './component/image-card-placeholder/image-card-placeholder.component';
+import {CategoryManagementModalComponent} from './component/category-management-modal/category-management-modal.component';
+import {ModalModule} from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import {ImageCardPlaceholderComponent} from './component/image-card-placeholder/
     TagEditModalComponent,
     UploadContainerComponent,
     TagBadgeComponent,
-    ImageCardPlaceholderComponent
+    ImageCardPlaceholderComponent,
+    CategoryManagementModalComponent
   ],
   exports: [
     HeaderComponent,
@@ -33,13 +36,15 @@ import {ImageCardPlaceholderComponent} from './component/image-card-placeholder/
     TagEditModalComponent,
     UploadContainerComponent,
     TagBadgeComponent,
-    ImageCardPlaceholderComponent
+    ImageCardPlaceholderComponent,
+    CategoryManagementModalComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     TranslateModule.forChild(),
-    FormsModule
+    FormsModule,
+    ModalModule.forChild()
   ]
 })
 export class LayoutModule {

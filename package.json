@@ -24,6 +24,7 @@
     "bootstrap": "^5.0.1",
     "masonry-layout": "^4.2.2",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-infinite-scroll": "^10.0.1",
     "ngx-masonry": "^11.0.2",
     "ngx-quicklink": "^0.2.7",
     "notyf": "^3.10.0",

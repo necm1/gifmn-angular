@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {APIService} from '../../_service/api.service';
 import {APIResponse} from '../../_model/api/api-response.model';
 import {map} from 'rxjs/operators';
+import {CategoryService} from '../../_service/category.service';
 
 @Injectable({ providedIn: 'root' })
 /**
@@ -16,9 +17,11 @@ export class CategoryResolver implements Resolve<PostCategory[]> {
    * CategoryResolver Constructor
    *
    * @constructor
-   * @param apiService
+   * @param categoryService
    */
-  constructor(private apiService: APIService) {}
+  constructor(
+    private categoryService: CategoryService
+  ) {}
 
   /**
    * Resolve Categories
@@ -32,10 +35,6 @@ export class CategoryResolver implements Resolve<PostCategory[]> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<PostCategory[]> {
-    return (this.apiService
-      .get<PostCategory[]>('categories') as Observable<APIResponse<PostCategory[]>>)
-      .pipe(
-        map(value => value.data)
-      ) as Observable<PostCategory[]>;
+    return this.categoryService.categories();
   }
 }

@@ -6,6 +6,7 @@ import {LayoutModule} from '../layout/layout.module';
 import {NgxMasonryModule} from 'ngx-masonry';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {TranslateModule} from '@ngx-translate/core';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -15,7 +16,8 @@ import {TranslateModule} from '@ngx-translate/core';
     LayoutModule,
     NgxMasonryModule,
     BsDropdownModule.forRoot(),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    InfiniteScrollModule
   ]
 })
 /**

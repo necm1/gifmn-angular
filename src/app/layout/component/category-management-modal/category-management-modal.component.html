@@ -1,0 +1,56 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ 'category.modal.title' | translate }}</h5>
+  <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="bsModalRef.hide()"></button>
+</div>
+<div class="modal-body d-flex flex-column justify-content-center align-items-lg-center">
+  <p translate="category.modal.body.select"></p>
+  <select #list class="form-control" (change)="onCategorySelect(list.value)">
+    <option></option>
+    <option *ngFor="let cat of categories" [value]="cat?.id">{{cat?.name}}</option>
+  </select>
+
+  <hr>
+
+  <ng-container *ngIf="category; else create">
+    <label for="category" translate="category.modal.body.label"></label>
+    <input
+      id="category"
+      #categoryInput
+      type="text"
+      [placeholder]="category.name"
+      class="form-control" required="" autofocus />
+  </ng-container>
+
+  <ng-template #create>
+    <label for="category" translate="category.modal.body.create"></label>
+    <input
+      id="category"
+      #categoryInput
+      type="text"
+      [placeholder]="'category.modal.body.label' | translate"
+      class="form-control" required="" autofocus />
+  </ng-template>
+</div>
+<div class="modal-footer">
+  <ng-container *ngIf="category; else createFooter">
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="onDelete(category.id)"
+    >{{ 'category.modal.footer.delete' | translate: {name: category?.name} }}</button>
+    <button
+      type="button"
+      class="btn btn-outline-success"
+      (click)="onSave()"
+    >{{ 'category.modal.footer.save' | translate: {name: category?.name} }}</button>
+  </ng-container>
+
+  <ng-template #createFooter>
+    <button
+      *ngIf="categoryInput?.nativeElement?.value"
+      type="button"
+      class="btn btn-outline-success"
+      (click)="onCreate()"
+    >{{ 'category.modal.footer.create' | translate: {name: categoryInput.nativeElement.value} }}</button>
+  </ng-template>
+</div>
