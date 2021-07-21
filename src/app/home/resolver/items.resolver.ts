@@ -42,7 +42,7 @@ export class ItemsResolver implements Resolve<APIResponseList<Post>> {
 
     if (activeCategory) {
       return this.apiService.get<Post>(
-        `category/${activeCategory.id}/posts?page=1&limit=35`,
+        `category/${activeCategory.id}/posts?page=1`,
         {},
         true
       ) as Observable<APIResponseList<Post>>;

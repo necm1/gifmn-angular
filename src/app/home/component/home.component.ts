@@ -89,6 +89,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @public
    */
   public ngOnInit(): void {
+    if (this.items.length === 0) {
+      for (let i = 0; i < 35; i++) {
+        this.items.push({
+          description: '',
+          title: ''
+        } as any);
+      }
+    }
+
     this.categories = this.route.snapshot.data['categories'] ?? [];
     this.itemsList = this.route.snapshot.data['items'] ?? [];
     this.items = this.itemsList.items ?? [];
@@ -103,17 +112,24 @@ export class HomeComponent implements OnInit, AfterViewInit {
       // Set first item
       this.activeDropdownItem = this.categoryService.category;
     }
-
-    for (let i = this.items.length; i < 35; i++) {
-      this.items.push({
-        description: '',
-        title: ''
-      } as any);
-    }
   }
 
   public onScroll() {
-    console.log('scrolling hbaibi');
+    if (!this.itemsList || this.items.length === 0) {
+      return;
+    }
+
+    const subscription: Subscription = (this.apiService.get<Post>(
+      `category/${this.categoryService.category.id}/posts?page=${this.itemsList.meta.currentPage + 1}`,
+      {},
+      true
+    ) as Observable<APIResponseList<Post>>).subscribe({
+      next: value => {
+        value.items.forEach(entry => this.items.push(entry));
+        this.itemsList = value;
+      },
+      complete: () => subscription.unsubscribe()
+    });
   }
 
   /**
