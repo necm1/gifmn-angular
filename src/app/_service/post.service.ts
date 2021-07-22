@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {APIService} from './api.service';
-import {Observable} from 'rxjs';
+import {Observable, pipe} from 'rxjs';
 import {Post} from '../_model/post/post.entity';
 import {UserService} from './user.service';
 import {APIResponse} from '../_model/api/api-response.model';
@@ -28,6 +28,16 @@ export class PostService {
   }
 
   /**
+   * Search Post
+   *
+   * @public
+   * @param query
+   */
+  public search(query: string): Observable<APIResponse<Post[]>> {
+    return this.apiService.post<Post[]>('post/search', {query}) as Observable<APIResponse<Post[]>>;
+  }
+
+  /**
    * Update Post
    *
    * @public
@@ -36,7 +46,7 @@ export class PostService {
    * @returns Observable<boolean>
    */
   public update(id: number, body: FormData): Observable<Post> {
-    return (this.apiService.put<Post>('post/' + id, body) as Observable<APIResponse<Post>>).pipe(
+    return (this.apiService.put<Post>(`post/${id}`, body) as Observable<APIResponse<Post>>).pipe(
       map(value => value.data)
     );
   }

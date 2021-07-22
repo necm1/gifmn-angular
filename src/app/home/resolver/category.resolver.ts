@@ -14,7 +14,7 @@ import {CategoryService} from '../../_service/category.service';
  */
 export class CategoryResolver implements Resolve<PostCategory[]> {
   /**
-   * CategoryResolver Constructor
+   * SearchResolver Constructor
    *
    * @constructor
    * @param categoryService

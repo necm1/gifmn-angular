@@ -122,7 +122,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     }
 
     // our result is always different
-    // that's why we take the first index
+    // that'resolve why we take the first index
     return array[0];
   }
 

@@ -105,5 +105,11 @@
     "logout": "Abmelden",
     "upload": "Hochladen",
     "category": "Kategorien Verwalten"
+  },
+
+  "404": {
+    "title": "Seite wurde nicht gefunden",
+    "h2": "404 - Seite wurde nicht gefunden",
+    "text": "<p>Klicke <a href=\"/\">hier</a>, um wieder auf die Startseite zu gelangen</p>"
   }
 }

@@ -61,6 +61,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   public activeDropdownItem: PostCategory;
 
+  /**
+   * @public
+   * @property
+   */
   public masonryOptions: NgxMasonryOptions = {
     percentPosition: true,
     itemSelector: '.masonry-item',

@@ -28,6 +28,11 @@ const routes: Routes = [
     canActivate: [UserGuard]
   },
   {
+    path: 'search',
+    loadChildren: () => import('./search/search.module').then(m => m.SearchModule),
+    canActivate: [UserGuard]
+  },
+  {
     path: '404',
     component: NotFoundComponent
   },

@@ -14,7 +14,7 @@ import {Post} from '../../_model/post/post.entity';
  */
 export class PostResolver implements Resolve<Post> {
   /**
-   * CategoryResolver Constructor
+   * SearchResolver Constructor
    *
    * @constructor
    * @param apiService
